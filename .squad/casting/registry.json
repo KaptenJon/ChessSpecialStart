@@ -1,0 +1,39 @@
+{
+  "agents": {
+    "lead": {
+      "persistent_name": "Lead",
+      "universe": "descriptive",
+      "created_at": "2026-09-16T12:54:14+02:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "android-ui": {
+      "persistent_name": "Android UI Dev",
+      "universe": "descriptive",
+      "created_at": "2026-09-16T12:54:14+02:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "engine-dev": {
+      "persistent_name": "Engine Dev",
+      "universe": "descriptive",
+      "created_at": "2026-09-16T12:54:14+02:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "ai-dev": {
+      "persistent_name": "AI Dev",
+      "universe": "descriptive",
+      "created_at": "2026-09-16T12:54:14+02:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "tester": {
+      "persistent_name": "Tester",
+      "universe": "descriptive",
+      "created_at": "2026-09-16T12:54:14+02:00",
+      "legacy_named": false,
+      "status": "active"
+    }
+  }
+}

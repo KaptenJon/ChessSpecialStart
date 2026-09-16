@@ -1,0 +1,10 @@
+{
+  "universe_usage_history": ["descriptive"],
+  "assignment_cast_snapshots": {
+    "assignment-2026-09-16-001": {
+      "universe": "descriptive",
+      "created_at": "2026-09-16T12:54:14+02:00",
+      "members": ["lead", "android-ui", "engine-dev", "ai-dev", "tester"]
+    }
+  }
+}
