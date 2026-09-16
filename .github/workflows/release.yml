@@ -23,13 +23,18 @@ jobs:
           java-version: "17"
           cache: gradle
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Install Android SDK packages
+        shell: bash
         run: |
-          yes | sdkmanager --licenses > /dev/null
-          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          export ANDROID_HOME="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' | sort | tail -n 1)"
+          fi
+          set +o pipefail
+          yes | "$SDKMANAGER" --licenses > /dev/null
+          set -o pipefail
+          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
