@@ -13,3 +13,7 @@
 📌 Team update (2026-09-16T13:35:00+02:00): First full development pass landed across scaffold, engine, AI, UI, and tests; local end-to-end Gradle verification remains incomplete on this machine because Gradle wrapper execution / Android SDK Build-Tools 34 were unavailable.
 
 📌 Team update (2026-09-16T13:55:00+02:00): Local Android bring-up is now complete: JDK 17, Android SDK tooling, and the real Gradle wrapper were verified; README/.gitignore were updated for local builds; and `:engine:test :ai:test :app:assembleDebug` now passes with `app/build/outputs/apk/debug/app-debug.apk` produced.
+
+📌 Team update (2026-09-16T22:10:00+02:00): GitHub Actions CI and tagged-release automation are now in place, with `scripts/run-on-device.ps1` / `scripts/run-on-device.sh` added for local install-and-launch flows; release signing is driven by the four GitHub Actions secrets instead of any committed keystore material.
+
+📌 Team update (2026-09-16T22:10:00+02:00): The initial CI failure was fixed by removing `android-actions/setup-android@v3`, CI is green, and `KaptenJon/ChessSpecialStart` now has a successful `v0.1.0` GitHub Release with a signed APK asset. Operationally, losing the current release keystore would force a new signing key and break upgrade continuity for installs signed with the original key.

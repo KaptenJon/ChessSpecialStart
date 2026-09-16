@@ -2,6 +2,8 @@
 
 ChessPoints is a simple, beautiful Android chess game where players buy a 16-piece army with a shared point budget, place those pieces on the board, and then play standard chess from the custom setup.
 
+**New here? See [`GETSTARTED.md`](GETSTARTED.md).**
+
 See `PROJECT_DESCRIPTION.md` for the product overview, rules, and v1 scope.
 
 ## Open in Android Studio
@@ -45,8 +47,19 @@ Release builds require these repository secrets so CI can sign the APK:
 - `RELEASE_KEY_ALIAS`
 - `RELEASE_KEY_PASSWORD`
 
-To create a release keystore, follow Android's official signing guidance:
-https://developer.android.com/studio/publish/app-signing#generate-key
+The easiest way to configure them is:
+
+- `powershell -ExecutionPolicy Bypass -File .\scripts\setup-release-secrets.ps1`
+
+That helper script:
+
+- checks that `gh` is installed and authenticated
+- detects the target repo with `gh repo view`
+- reuses an existing keystore or helps generate one
+- base64-encodes the keystore
+- sets the four required GitHub Actions secrets without echoing their values
+
+Manual fallback / explanation of what the script does:
 
 Example `keytool` command:
 
@@ -57,7 +70,19 @@ Base64-encode the keystore before uploading it as `RELEASE_KEYSTORE_BASE64`:
 - Windows PowerShell: `[Convert]::ToBase64String([IO.File]::ReadAllBytes("release.keystore"))`
 - Linux: `base64 -w0 release.keystore`
 
-The release workflow decodes that secret during CI, signs the APK when all four values are present, and local builds continue to work without any committed keystore file.
+Then set the secrets manually if needed:
+
+```powershell
+$repo = "KaptenJon/ChessSpecialStart"
+$keystoreBase64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes(".\release.keystore"))
+
+gh secret set RELEASE_KEYSTORE_BASE64 --repo $repo --body $keystoreBase64
+gh secret set RELEASE_KEYSTORE_PASSWORD --repo $repo --body "<store-password>"
+gh secret set RELEASE_KEY_ALIAS --repo $repo --body "chesspoints"
+gh secret set RELEASE_KEY_PASSWORD --repo $repo --body "<key-password>"
+```
+
+`release.yml` decodes `RELEASE_KEYSTORE_BASE64` during CI, exports `RELEASE_STORE_FILE`, `RELEASE_STORE_PASSWORD`, `RELEASE_KEY_ALIAS`, and `RELEASE_KEY_PASSWORD` for `app/build.gradle.kts`, then builds the signed release APK. Local builds continue to work without any committed keystore file.
 
 ## Run on a Connected Device
 
