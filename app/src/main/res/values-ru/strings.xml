@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Выберите режим</string>
+    <string name="title_build_and_place">Купить и расставить</string>
+    <string name="title_place_pieces">Расставьте фигуры</string>
+    <string name="title_play_match">Играть партию</string>
+
+    <string name="home_hero_title">Купите свою армию.\nСоберите доску. И играйте.</string>
+    <string name="home_hero_body">Начните с бюджета в %1$d очков, наберите %2$d фигур, расставьте их на своей половине — и партия начнётся.</string>
+    <string name="home_section_mode">Выберите режим</string>
+    <string name="home_mode_two_player_title">2 игрока</string>
+    <string name="home_mode_two_player_subtitle">По очереди на одном устройстве: покупка, расстановка и партия.</string>
+    <string name="home_mode_ai_title">Против ИИ</string>
+    <string name="home_mode_ai_subtitle">Встроенный соперник покупает фигуры, расставляет их и играет против вас.</string>
+    <string name="home_start_button">Купить и расставить фигуры</string>
+
+    <string name="phase_step_setup">Подготовка · Покупка и расстановка</string>
+    <string name="phase_step_place">Шаг 2 · Расстановка</string>
+    <string name="badge_vs_ai">Против ИИ</string>
+    <string name="placement_header_build">%1$s собирает армию</string>
+    <string name="placement_header_place">Сейчас расставляет %1$s</string>
+    <string name="placement_zone_hint">Допустимые горизонтали %1$d–%2$d</string>
+    <string name="placement_section_unplaced">Нерасставленные фигуры</string>
+    <string name="draft_section_drag">Перетащите фигуру на разрешённое поле</string>
+    <string name="draft_drop_hint">Каждое перетаскивание покупает и ставит ровно одну фигуру. Счётчик магазина меняется только после корректной установки.</string>
+    <string name="draft_auto_finish">Подготовка завершится автоматически после последней фигуры.</string>
+    <string name="draft_metric_budget">Бюджет</string>
+    <string name="draft_metric_army">Армия</string>
+    <string name="draft_king_free">Бесплатно и обязательно</string>
+    <string name="cd_drag_piece">Перетащите %1$s на доску</string>
+    <string name="shop_piece_cost">%1$d оч.</string>
+
+    <string name="game_turn_title">Ход: %1$s</string>
+    <string name="game_badge_waiting">Ожидание</string>
+    <string name="game_captured_by_white">Взято белыми</string>
+    <string name="game_captured_by_black">Взято чёрными</string>
+    <string name="game_captured_points">%1$d оч.</string>
+    <string name="game_no_captures">Взятий пока нет.</string>
+    <string name="promotion_title">Выберите превращение</string>
+    <string name="promotion_body">Ваша пешка дошла до последней горизонтали.</string>
+
+    <string name="piece_pawn">Пешка</string>
+    <string name="piece_knight">Конь</string>
+    <string name="piece_bishop">Слон</string>
+    <string name="piece_rook">Ладья</string>
+    <string name="piece_queen">Ферзь</string>
+    <string name="piece_king">Король</string>
+    <string name="color_white">Белые</string>
+    <string name="color_black">Чёрные</string>
+    <string name="label_you">Вы</string>
+    <string name="label_ai">ИИ</string>
+    <string name="cd_chess_piece">Шахматная фигура: %1$s %2$s</string>
+
+    <string name="helper_waiting_ai_army">Ожидание армии ИИ.</string>
+    <string name="helper_ai_preparing_army">ИИ готовит свою армию.</string>
+    <string name="helper_build_army">Соберите армию из %1$d фигур с обязательным королём.</string>
+    <string name="helper_waiting_ai_placement">Ожидание расстановки ИИ.</string>
+    <string name="helper_ai_choosing_placement">ИИ выбирает расстановку.</string>
+    <string name="helper_pick_piece">Перетащите фигуру из магазина на подсвеченное поле.</string>
+    <string name="helper_tap_zone">Отпустите на поле внутри зоны расстановки для стороны %1$s.</string>
+
+    <string name="banner_select_piece_first">Сначала выберите фигуру.</string>
+    <string name="banner_illegal_destination">Это поле недопустимо для выбранной фигуры.</string>
+    <string name="ai_no_placement">ИИ не нашёл допустимой расстановки.</string>
+    <string name="ai_no_move">ИИ не нашёл допустимого хода.</string>
+
+    <string name="status_to_move">Ход: %1$s.</string>
+    <string name="status_check">%1$s под шахом.</string>
+    <string name="status_checkmate">%1$s поставили мат.</string>
+    <string name="status_king_captured">%1$s взяли короля.</string>
+    <string name="status_draw">Ничья: %1$s.</string>
+    <string name="outcome_checkmate">%1$s побеждают матом.</string>
+    <string name="outcome_king_captured">%1$s побеждают, взяв короля.</string>
+    <string name="draw_stalemate">пат</string>
+    <string name="draw_insufficient_material">недостаточно материала</string>
+
+    <string name="error_negative_piece_count">Количество фигур «%1$s» не может быть отрицательным (%2$d).</string>
+    <string name="error_piece_count_mismatch">Ожидалось ровно %1$d фигур, получено %2$d.</string>
+    <string name="error_king_count_mismatch">Ожидался ровно %1$d король, получено %2$d.</string>
+    <string name="error_budget_exceeded">Армия стоит %1$d очков и превышает бюджет в %2$d очков.</string>
+    <string name="error_piece_limit_reached">В армии уже %1$d фигур.</string>
+    <string name="error_king_already_selected">Допускается только один король.</string>
+    <string name="error_purchase_over_budget">Покупка превышает бюджет на %1$d очков; для %2$d мест потребуется ещё не менее %3$d очков.</string>
+    <string name="error_cannot_complete_army">После покупки останется %1$d мест и лишь %2$d очков; для полной армии нужно минимум %3$d очков.</string>
+    <string name="error_wrong_placement_turn">Сейчас расставляет %1$s, а не %2$s.</string>
+    <string name="error_piece_not_available">У стороны %1$s не осталось фигур «%2$s» для расстановки.</string>
+    <string name="error_square_occupied">Поле %1$s уже занято.</string>
+    <string name="error_outside_zone">Поле %1$s вне зоны расстановки для стороны %2$s (горизонтали %3$d–%4$d).</string>
+    <string name="error_duplicate_draft">%1$s уже отправили армию.</string>
+    <string name="error_wrong_phase">Это действие сейчас недоступно.</string>
+    <string name="error_no_piece_at_source">На поле %1$s нет фигуры.</string>
+    <string name="error_wrong_color_turn">Сейчас ход стороны %1$s, а не %2$s.</string>
+    <string name="error_illegal_move">Ход %1$s–%2$s недопустим.</string>
+    <string name="error_unknown">Что-то пошло не так.</string>
+    <plurals name="draft_points_left">
+        <item quantity="one">Осталось %1$d очко</item>
+        <item quantity="few">Осталось %1$d очка</item>
+        <item quantity="many">Осталось %1$d очков</item>
+        <item quantity="other">Осталось %1$d очка</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="one">Осталось %1$d место</item>
+        <item quantity="few">Осталось %1$d места</item>
+        <item quantity="many">Осталось %1$d мест</item>
+        <item quantity="other">Осталось %1$d места</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">Шах!</string>
+    <string name="game_check_body">%1$s под шахом - уведите короля в безопасное место.</string>
+    <string name="game_checkmate_title">Мат!</string>
+    <string name="game_checkmate_body">%1$s получает мат. Партия окончена.</string>
+    <string name="game_over_title">Партия окончена</string>
+    <string name="action_new_game">Новая игра</string>
+    <string name="action_home">На главную</string>
+    <string name="action_leave">Выйти из партии</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="dialog_leave_title">Выйти из этой партии?</string>
+    <string name="dialog_leave_body">Текущая расстановка и ходы будут потеряны.</string>
+    <string name="cd_back">Назад</string>
+    <string name="cd_app_logo">Логотип ChessPoints</string>
+</resources>

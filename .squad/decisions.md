@@ -24,7 +24,7 @@
 
 ### 2026-09-16: Default engine constants and integration assumptions
 **By:** Engine Dev
-**What:** Default draft constants are `DEFAULT_BUDGET = 39` and `DEFAULT_ARMY_SIZE = 16`. Default placement zones are white ranks `0..1` (`1st-2nd` ranks) and black ranks `6..7` (`7th-8th` ranks). `Board` is immutable, so callers should replace board references instead of mutating in place. `Square.rank` is zero-based (`0 == rank 1`), `Square.file` is zero-based (`0 == file a`), and `Square.algebraic` / `Square.fromAlgebraic(...)` are the safest boundary helpers for UI and AI. Promotion requires the caller to specify the target piece in `MoveRequest`.
+**What:** Default draft constants are `DEFAULT_BUDGET = 39` and `DEFAULT_ARMY_SIZE = 16`. Default placement zones are white ranks `0..1` (`1st-2nd` ranks) and black ranks `6..7` (`7th-8th ranks`). `Board` is immutable, so callers should replace board references instead of mutating in place. `Square.rank` is zero-based (`0 == rank 1`), `Square.file` is zero-based (`0 == file a`), and `Square.algebraic` / `Square.fromAlgebraic(...)` are the safest boundary helpers for UI and AI. Promotion requires the caller to specify the target piece in `MoveRequest`.
 **Why:** These defaults match the product spec, keep the public API deterministic, and give Android UI Dev / AI Dev / Tester a stable contract to build against.
 
 ### 2026-09-16: Expanded engine edge-case coverage and seeded minimal AI test stub
@@ -35,7 +35,7 @@
 ### 2026-09-16: AI opponent public API
 **By:** AI Dev
 **What:** Added the `:ai` module AI surface as three pure Kotlin entry points: `AiDrafter.draft(color, rules = DraftRules(), random = Random.Default): Roster`, `AiPlacer.nextPlacement(state, color = state.sideToPlace): AiPlacementChoice?`, and `AiMoveEngine.chooseMove(position, config = AiSearchConfig(depth = 2, timeBudgetMillis = null)): AiMoveChoice`. `AiMoveChoice` includes the selected legal move plus search diagnostics (`searchedDepth`, `evaluatedNodes`, `completedRequestedDepth`) for difficulty tuning and UI telemetry.
-**Why:** Android UI Dev needs a small, engine-backed API for solo play that can draft a legal army, choose legal placement turns, and search legal game moves without depending on Android threading APIs.
+**Why:** Android UI Dev needs a small, engine-backed API for solo play, draft/placement/move decisions, without depending on Android threading APIs.
 
 ### 2026-09-16: AI opponent defaults and assumptions
 **By:** AI Dev
@@ -69,37 +69,40 @@
 
 ### 2026-09-16: Local Android build environment verified
 **By:** Lead
-**What:** Established and verified a working local Android build toolchain on the repo owner's machine:
-- Installed JDK 17 (Eclipse Temurin) at `C:\Program Files\Eclipse Adoptium\jdk-17.0.20.101-hotspot` because Android Gradle Plugin `8.7.3` requires JVM 11+ and the machine default Java was `1.8`.
-- Installed Android SDK command-line tools at `C:\android-sdk`, accepted all SDK licenses, and installed `platform-tools`, `platforms;android-34`, and `build-tools;34.0.0`. Gradle also auto-resolved and installed platform `35` during build resolution.
-- Generated the real Gradle wrapper artifacts locally via Gradle `8.9`: `gradlew`, `gradlew.bat`, and `gradle/wrapper/gradle-wrapper.jar`. The wrapper JAR had previously been absent because it is not created by a normal `git init`.
-- Created `local.properties` with `sdk.dir=C\:\\android-sdk` for this machine's Android SDK location. This file is intentionally local-only and remains ignored.
-- Verified the full local build with `gradlew.bat :engine:test :ai:test :app:assembleDebug`, which completed with `BUILD SUCCESSFUL`. All `:engine` and `:ai` unit tests passed, and the debug APK was produced at `app/build/outputs/apk/debug/app-debug.apk`.
-- Recorded two real fixes discovered during verification:
-  1. Added `com.google.android.material:material` to `app/build.gradle.kts` so the XML parent theme `Theme.Material3.DayNight.NoActionBar` in `res/values/themes.xml` resolves correctly.
-  2. Fixed Android UI Dev screen imports in `DraftScreen.kt`, `GameScreen.kt`, `PlacementScreen.kt`, and `ChessBoard.kt` by importing `verticalScroll` from `androidx.compose.foundation` instead of `androidx.compose.foundation.layout`, and by removing the incorrect explicit `weight` import that shadowed the scoped `Row`/`Column` extension. The fix was verified by a passing `:app:compileDebugKotlin`.
-- Decision on source control:
-  - `gradlew`, `gradlew.bat`, and `gradle/wrapper/gradle-wrapper.jar` **should be committed** so every machine and CI environment can use the same reproducible Gradle wrapper.
-  - `local.properties`, the installed Android SDK, and the installed JDK **must not be committed**, because they are machine-specific environment state.
-**Why:** Reproducible local builds now depend on a documented Java/Android toolchain baseline plus committed Gradle wrapper artifacts, while machine-specific SDK pointers remain local. Capturing the two bugs found during bring-up prevents other teammates from re-discovering the same failures.
+**What:** Established and verified a working local Android build toolchain on the repo owner's machine, including JDK 17, Android SDK tooling, committed Gradle wrapper artifacts, and a passing `:engine:test :ai:test :app:assembleDebug` build. Machine-specific SDK/JDK state remains uncommitted. The bring-up also fixed the Material dependency and invalid Compose imports.
+**Why:** Reproducible local builds now depend on a documented Java/Android toolchain baseline plus committed Gradle wrapper artifacts, while machine-specific SDK pointers remain local.
 
 ### 2026-09-16: Compose scroll/weight import build fix
 **By:** Android UI Dev
 **What:** Fixed Compose import mistakes in `DraftScreen`, `GameScreen`, and `PlacementScreen` by switching `verticalScroll` to `androidx.compose.foundation.verticalScroll`, and removed explicit `weight` imports from `DraftScreen` and `ChessBoard` so `Modifier.weight(...)` resolves from the surrounding `Row`/`Column` scope receivers. Also checked the rest of `app/src/main/java/com/chesspoints/` for the same Compose foundation import mistake pattern and found no other instances.
-**Why:** The first real Gradle compile surfaced imports that were accepted in earlier stubbed work but are invalid against the actual Compose APIs. `verticalScroll` lives in `foundation`, not `foundation.layout`, and explicit `weight` imports were binding to the wrong symbol instead of the scoped Compose extension used inside `Row`/`Column`.
+**Why:** The first real Gradle compile surfaced imports that were accepted in earlier stubbed work but are invalid against the actual Compose APIs.
 
 ### 2026-09-16: Android CI/CD and local device-run setup
 **By:** Lead
-**What:** Added GitHub Actions workflows for CI (`.github/workflows/ci.yml`) and tagged releases (`.github/workflows/release.yml`), plus `scripts/run-on-device.ps1` and `scripts/run-on-device.sh` for local debug install/launch flows. The release pipeline expects four GitHub secrets: `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS`, and `RELEASE_KEY_PASSWORD`.
-**Why:** The team now has a reproducible Android validation path for pushes, pull requests, and version tags, along with a simple local device deployment script. Release signing is configured to use CI-provided secrets when present, while local `assembleRelease` gracefully falls back without requiring any committed keystore material.
+**What:** Added GitHub Actions workflows for CI and tagged releases, plus local debug install/launch scripts. Release signing expects four GitHub secrets and does not commit keystore material.
+**Why:** The team now has a reproducible Android validation path for pushes, pull requests, and version tags, along with a simple local device deployment script.
 
 ### 2026-09-16: Removed broken setup-android action from GitHub workflows
 **By:** Lead
-**What:** Removed `android-actions/setup-android@v3` from both `.github/workflows/ci.yml` and `.github/workflows/release.yml`, and kept SDK package installation by accepting licenses non-interactively and invoking the runner's existing `sdkmanager` from the preinstalled Android SDK under `ANDROID_HOME` (falling back to the hosted-runner default SDK path if needed).
-**Why:** GitHub-hosted `ubuntu-latest` runners already provide an Android SDK, while `setup-android@v3` currently fails by trying to install the legacy `tools` package that Google removed from the SDK repository. Resolving `sdkmanager` from the preinstalled runner SDK avoids that broken dependency and is more robust than assuming the tool is already on `PATH`.
+**What:** Removed `android-actions/setup-android@v3` from both workflows and kept SDK package installation through the runner's preinstalled Android SDK and `sdkmanager`.
+**Why:** Hosted runners already provide an Android SDK, while the action fails trying to install the removed legacy `tools` package.
 
-## Governance
+### 2026-09-16: Release bootstrap docs and secret-setup helper
+**By:** Lead
+**What:** Added `GETSTARTED.md`, updated `README.md`, and created `scripts/setup-release-secrets.ps1` to generate or reuse a signing keystore and configure the four GitHub Actions release secrets without echoing secret values.
+**Why:** Centralizing release setup makes new machines, maintainers, and forks easier to bootstrap while reducing secret-handling mistakes.
 
-- All meaningful changes require team consensus
-- Document architectural decisions here
-- Keep history focused on work, decisions focused on direction
+### 2026-09-16: Centralized buy-flow affordability guard
+**By:** Engine Dev
+**What:** Added `DraftValidator.canAddPiece(...)` to determine whether a candidate purchase leaves enough budget and slots to complete a valid required-size roster, including reserving the mandatory king. The combined buy+placement UI now delegates its disabled-state guard to this engine API.
+**Why:** Affordability is a rules concern and must not be duplicated in Android UI logic. No new piece type was introduced for the ambiguous “gard” term; clarification would be required if that is intended to name a piece.
+
+### 2026-09-16: Terminal king-capture outcome and UI enforcement
+**By:** Engine Dev
+**What:** Added explicit KingCaptured terminal status/outcome while preserving legal move generation that permits the product's king-capture goal. Moves still filter out self-check; king captures are rejected when the moving king is adjacent to the enemy king. The game UI now honors interactionEnabled before forwarding board taps, and AI search treats king capture as terminal.
+**Why:** The product wording combines standard check legality with king capture as the goal. Explicit terminal state prevents play continuing after a king is removed and keeps app/AI behavior consistent.
+
+### 2026-09-16: Placement guard warnings for impossible purchases
+**By:** Engine Dev
+**What:** “Gard” is treated as a placement guard/validation warning. Added `DraftPurchaseValidation` and `DraftValidator.validateAddition(...)` with structured rejection details and actionable messages for budget/remaining-slot failures. `canAddPiece(...)` remains the boolean disabled-state convenience API, and app state exposes `draftPurchaseValidation(...)` for UI messaging.
+**Why:** The UI needs both a cheap enabled/disabled predicate and enough structured information to explain why a candidate purchase cannot lead to a valid 16-piece army.

@@ -9,3 +9,4 @@
 
 
 📌 Team update (2026-09-16T13:35:00+02:00): Android UI and AI now integrate against the `ChessGame` / engine surface, and Tester expanded edge-case coverage without finding engine bugs in exercised cases.
+📌 Team update (2026-09-16T23:02:26.826+02:00): Merged Engine Dev decisions for centralized buy-flow affordability, structured placement-guard warnings, and explicit KingCaptured terminal outcome with self-check/king-adjacency safety.

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">モードを選択</string>
+    <string name="title_build_and_place">購入して配置</string>
+    <string name="title_place_pieces">駒を配置</string>
+    <string name="title_play_match">対局する</string>
+
+    <string name="home_hero_title">戦力を買う。\n盤を作る。そして戦う。</string>
+    <string name="home_hero_body">%1$dポイントの予算で始め、%2$d個の駒をそろえ、自陣に配置して対局を始めましょう。</string>
+    <string name="home_section_mode">モードを選択</string>
+    <string name="home_mode_two_player_title">2人プレイ</string>
+    <string name="home_mode_two_player_subtitle">1台の端末で交代しながら、購入・配置・対局を行います。</string>
+    <string name="home_mode_ai_title">AI対戦</string>
+    <string name="home_mode_ai_subtitle">内蔵の対戦相手が駒を購入・配置し、あなたと対局します。</string>
+    <string name="home_start_button">駒を購入して配置</string>
+
+    <string name="phase_step_setup">準備 · 購入と配置</string>
+    <string name="phase_step_place">ステップ2 · 配置</string>
+    <string name="badge_vs_ai">AI対戦</string>
+    <string name="placement_header_build">%1$sが戦力を編成中</string>
+    <string name="placement_header_place">次は%1$sの配置です</string>
+    <string name="placement_zone_hint">配置可能なランク %1$d–%2$d</string>
+    <string name="placement_section_unplaced">未配置の駒</string>
+    <string name="draft_section_drag">駒を有効なマスにドラッグ</string>
+    <string name="draft_drop_hint">1回のドロップで駒をちょうど1つ購入して配置します。ショップの数は有効なドロップの後にのみ更新されます。</string>
+    <string name="draft_auto_finish">最後の駒を置くと準備は自動的に完了します。</string>
+    <string name="draft_metric_budget">予算</string>
+    <string name="draft_metric_army">戦力</string>
+    <string name="draft_king_free">無料かつ必須</string>
+    <string name="cd_drag_piece">%1$sを盤にドラッグ</string>
+    <string name="shop_piece_cost">%1$dポイント</string>
+
+    <string name="game_turn_title">%1$sの手番</string>
+    <string name="game_badge_waiting">待機中</string>
+    <string name="game_captured_by_white">白が取った駒</string>
+    <string name="game_captured_by_black">黒が取った駒</string>
+    <string name="game_captured_points">%1$dポイント</string>
+    <string name="game_no_captures">まだ取った駒はありません。</string>
+    <string name="promotion_title">昇格する駒を選択</string>
+    <string name="promotion_body">ポーンが最終ランクに到達しました。</string>
+
+    <string name="piece_pawn">ポーン</string>
+    <string name="piece_knight">ナイト</string>
+    <string name="piece_bishop">ビショップ</string>
+    <string name="piece_rook">ルーク</string>
+    <string name="piece_queen">クイーン</string>
+    <string name="piece_king">キング</string>
+    <string name="color_white">白</string>
+    <string name="color_black">黒</string>
+    <string name="label_you">あなた</string>
+    <string name="label_ai">AI</string>
+    <string name="cd_chess_piece">チェスの駒: %1$s %2$s</string>
+
+    <string name="helper_waiting_ai_army">AIの戦力を待っています。</string>
+    <string name="helper_ai_preparing_army">AIが戦力を準備しています。</string>
+    <string name="helper_build_army">必須のキングを含む%1$d個の戦力を編成してください。</string>
+    <string name="helper_waiting_ai_placement">AIの配置を待っています。</string>
+    <string name="helper_ai_choosing_placement">AIが配置を選んでいます。</string>
+    <string name="helper_pick_piece">ショップから駒をハイライトされたマスにドラッグしてください。</string>
+    <string name="helper_tap_zone">%1$sの配置ゾーン内のマスで離してください。</string>
+
+    <string name="banner_select_piece_first">先に駒を選択してください。</string>
+    <string name="banner_illegal_destination">選択した駒ではその移動先に進めません。</string>
+    <string name="ai_no_placement">AIは有効な配置を見つけられませんでした。</string>
+    <string name="ai_no_move">AIは有効な手を見つけられませんでした。</string>
+
+    <string name="status_to_move">%1$sの手番です。</string>
+    <string name="status_check">%1$sがチェックされています。</string>
+    <string name="status_checkmate">%1$sがチェックメイトしました。</string>
+    <string name="status_king_captured">%1$sがキングを取りました。</string>
+    <string name="status_draw">引き分け: %1$s。</string>
+    <string name="outcome_checkmate">%1$sがチェックメイトで勝ちました。</string>
+    <string name="outcome_king_captured">%1$sがキングを取って勝ちました。</string>
+    <string name="draw_stalemate">ステイルメイト</string>
+    <string name="draw_insufficient_material">駒不足</string>
+
+    <string name="error_negative_piece_count">%1$sの数を負の値にはできません（%2$d）。</string>
+    <string name="error_piece_count_mismatch">ちょうど%1$d個の駒が必要ですが、%2$d個でした。</string>
+    <string name="error_king_count_mismatch">キングはちょうど%1$d個必要ですが、%2$d個でした。</string>
+    <string name="error_budget_exceeded">戦力の合計は%1$dポイントで、%2$dポイントの予算を超えています。</string>
+    <string name="error_piece_limit_reached">戦力はすでに%1$d個の駒に達しています。</string>
+    <string name="error_king_already_selected">キングは1つだけです。</string>
+    <string name="error_purchase_over_budget">この購入は予算を%1$dポイント超えます。残り%2$d枠にはさらに%3$dポイント以上が必要です。</string>
+    <string name="error_cannot_complete_army">この購入では%1$d枠に対して%2$dポイントしか残りません。戦力を完成させるには最低%3$dポイント必要です。</string>
+    <string name="error_wrong_placement_turn">次に配置するのは%1$sで、%2$sではありません。</string>
+    <string name="error_piece_not_available">%1$sには配置できる%2$sが残っていません。</string>
+    <string name="error_square_occupied">マス%1$sはすでに使用されています。</string>
+    <string name="error_outside_zone">マス%1$sは%2$sの配置ゾーン外です（ランク%3$d–%4$d）。</string>
+    <string name="error_duplicate_draft">%1$sはすでに戦力を提出しています。</string>
+    <string name="error_wrong_phase">その操作は現在実行できません。</string>
+    <string name="error_no_piece_at_source">%1$sに駒がありません。</string>
+    <string name="error_wrong_color_turn">手番は%1$sで、%2$sではありません。</string>
+    <string name="error_illegal_move">%1$s–%2$sの手は指せません。</string>
+    <string name="error_unknown">問題が発生しました。</string>
+    <plurals name="draft_points_left">
+        <item quantity="other">残り%1$dポイント</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="other">残り%1$d枠</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">チェック！</string>
+    <string name="game_check_body">%1$sはチェックされています。キングを安全な場所へ。</string>
+    <string name="game_checkmate_title">チェックメイト！</string>
+    <string name="game_checkmate_body">%1$sはチェックメイトです。対局は終了しました。</string>
+    <string name="game_over_title">対局終了</string>
+    <string name="action_new_game">新しい対局</string>
+    <string name="action_home">ホーム</string>
+    <string name="action_leave">対局を終了</string>
+    <string name="action_cancel">キャンセル</string>
+    <string name="dialog_leave_title">この対局を終了しますか？</string>
+    <string name="dialog_leave_body">現在の配置と指し手は失われます。</string>
+    <string name="cd_back">戻る</string>
+    <string name="cd_app_logo">ChessPointsのロゴ</string>
+</resources>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">मोड चुनें</string>
+    <string name="title_build_and_place">खरीदें और रखें</string>
+    <string name="title_place_pieces">अपने मोहरे रखें</string>
+    <string name="title_play_match">मैच खेलें</string>
+
+    <string name="home_hero_title">अपनी सेना खरीदें।\nबोर्ड सजाएँ। फिर खेलें।</string>
+    <string name="home_hero_body">%1$d अंकों के बजट से शुरू करें, %2$d मोहरे चुनें, उन्हें अपनी तरफ रखें और खेल शुरू करें।</string>
+    <string name="home_section_mode">मोड चुनें</string>
+    <string name="home_mode_two_player_title">2 खिलाड़ी</string>
+    <string name="home_mode_two_player_subtitle">एक ही डिवाइस पर बारी-बारी से खरीदें, मोहरे रखें और खेलें।</string>
+    <string name="home_mode_ai_title">AI के विरुद्ध</string>
+    <string name="home_mode_ai_subtitle">अंतर्निहित प्रतिद्वंद्वी खुद मोहरे खरीदता, रखता और आपसे खेलता है।</string>
+    <string name="home_start_button">मोहरे खरीदें और रखें</string>
+
+    <string name="phase_step_setup">सेटअप · खरीदें और रखें</string>
+    <string name="phase_step_place">चरण 2 · रखें</string>
+    <string name="badge_vs_ai">AI के विरुद्ध</string>
+    <string name="placement_header_build">%1$s अपनी सेना बना रहे हैं</string>
+    <string name="placement_header_place">अब %1$s की बारी है</string>
+    <string name="placement_zone_hint">अनुमत रैंक %1$d–%2$d</string>
+    <string name="placement_section_unplaced">बिना रखे मोहरे</string>
+    <string name="draft_section_drag">मोहरे को मान्य खाने पर खींचें</string>
+    <string name="draft_drop_hint">हर बार छोड़ने पर ठीक एक मोहरा खरीदा और रखा जाता है। दुकान की गिनती केवल मान्य ड्रॉप के बाद बदलती है।</string>
+    <string name="draft_auto_finish">अंतिम मोहरा रखते ही सेटअप अपने आप पूरा हो जाएगा।</string>
+    <string name="draft_metric_budget">बजट</string>
+    <string name="draft_metric_army">सेना</string>
+    <string name="draft_king_free">नि:शुल्क और अनिवार्य</string>
+    <string name="cd_drag_piece">%1$s को बोर्ड पर खींचें</string>
+    <string name="shop_piece_cost">%1$d अंक</string>
+
+    <string name="game_turn_title">%1$s की चाल</string>
+    <string name="game_badge_waiting">प्रतीक्षा</string>
+    <string name="game_captured_by_white">सफेद द्वारा काटे गए</string>
+    <string name="game_captured_by_black">काले द्वारा काटे गए</string>
+    <string name="game_captured_points">%1$d अंक</string>
+    <string name="game_no_captures">अभी कोई मोहरा नहीं काटा गया।</string>
+    <string name="promotion_title">प्रमोशन चुनें</string>
+    <string name="promotion_body">आपका प्यादा अंतिम रैंक तक पहुँच गया।</string>
+
+    <string name="piece_pawn">प्यादा</string>
+    <string name="piece_knight">घोड़ा</string>
+    <string name="piece_bishop">ऊँट</string>
+    <string name="piece_rook">हाथी</string>
+    <string name="piece_queen">वज़ीर</string>
+    <string name="piece_king">राजा</string>
+    <string name="color_white">सफेद</string>
+    <string name="color_black">काला</string>
+    <string name="label_you">आप</string>
+    <string name="label_ai">AI</string>
+    <string name="cd_chess_piece">शतरंज मोहरा: %1$s %2$s</string>
+
+    <string name="helper_waiting_ai_army">AI की सेना की प्रतीक्षा है।</string>
+    <string name="helper_ai_preparing_army">AI अपनी सेना तैयार कर रहा है।</string>
+    <string name="helper_build_army">एक अनिवार्य राजा सहित %1$d मोहरों की सेना बनाएँ।</string>
+    <string name="helper_waiting_ai_placement">AI की चाल की प्रतीक्षा है।</string>
+    <string name="helper_ai_choosing_placement">AI स्थान चुन रहा है।</string>
+    <string name="helper_pick_piece">दुकान से मोहरे को हाइलाइट किए गए खाने पर खींचें।</string>
+    <string name="helper_tap_zone">%1$s के प्लेसमेंट क्षेत्र के भीतर किसी खाने पर छोड़ें।</string>
+
+    <string name="banner_select_piece_first">पहले एक मोहरा चुनें।</string>
+    <string name="banner_illegal_destination">चुने गए मोहरे के लिए वह गंतव्य मान्य नहीं है।</string>
+    <string name="ai_no_placement">AI को कोई मान्य स्थान नहीं मिला।</string>
+    <string name="ai_no_move">AI को कोई मान्य चाल नहीं मिली।</string>
+
+    <string name="status_to_move">%1$s की चाल है।</string>
+    <string name="status_check">%1$s शह में है।</string>
+    <string name="status_checkmate">%1$s ने शहमात दी।</string>
+    <string name="status_king_captured">%1$s ने राजा को काट लिया।</string>
+    <string name="status_draw">ड्रॉ: %1$s।</string>
+    <string name="outcome_checkmate">%1$s शहमात से जीते।</string>
+    <string name="outcome_king_captured">%1$s राजा काटकर जीते।</string>
+    <string name="draw_stalemate">गतिरोध</string>
+    <string name="draw_insufficient_material">अपर्याप्त मोहरे</string>
+
+    <string name="error_negative_piece_count">%1$s की संख्या ऋणात्मक नहीं हो सकती (%2$d)।</string>
+    <string name="error_piece_count_mismatch">ठीक %1$d मोहरे अपेक्षित थे, पर %2$d मिले।</string>
+    <string name="error_king_count_mismatch">ठीक %1$d राजा अपेक्षित था, पर %2$d मिले।</string>
+    <string name="error_budget_exceeded">सेना की लागत %1$d अंक है, जो %2$d अंकों के बजट से अधिक है।</string>
+    <string name="error_piece_limit_reached">सेना में पहले से %1$d मोहरे हैं।</string>
+    <string name="error_king_already_selected">केवल एक राजा की अनुमति है।</string>
+    <string name="error_purchase_over_budget">यह खरीद बजट से %1$d अंक अधिक है; %2$d स्थानों के लिए अब भी कम से कम %3$d अंक चाहिए।</string>
+    <string name="error_cannot_complete_army">इस खरीद के बाद %1$d स्थान बचेंगे पर केवल %2$d अंक; सेना पूरी करने के लिए कम से कम %3$d अंक चाहिए।</string>
+    <string name="error_wrong_placement_turn">अब %1$s की बारी है, %2$s की नहीं।</string>
+    <string name="error_piece_not_available">%1$s के पास रखने के लिए कोई %2$s शेष नहीं है।</string>
+    <string name="error_square_occupied">खाना %1$s पहले से भरा है।</string>
+    <string name="error_outside_zone">खाना %1$s, %2$s के प्लेसमेंट क्षेत्र से बाहर है (रैंक %3$d–%4$d)।</string>
+    <string name="error_duplicate_draft">%1$s पहले ही सेना जमा कर चुके हैं।</string>
+    <string name="error_wrong_phase">यह क्रिया अभी उपलब्ध नहीं है।</string>
+    <string name="error_no_piece_at_source">%1$s पर कोई मोहरा नहीं मिला।</string>
+    <string name="error_wrong_color_turn">अभी %1$s की चाल है, %2$s की नहीं।</string>
+    <string name="error_illegal_move">चाल %1$s–%2$s मान्य नहीं है।</string>
+    <string name="error_unknown">कुछ गड़बड़ हो गई।</string>
+    <plurals name="draft_points_left">
+        <item quantity="one">%1$d अंक शेष</item>
+        <item quantity="other">%1$d अंक शेष</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="one">%1$d स्थान शेष</item>
+        <item quantity="other">%1$d स्थान शेष</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">शह!</string>
+    <string name="game_check_body">%1$s शह में है - राजा को सुरक्षित जगह ले जाएँ।</string>
+    <string name="game_checkmate_title">शहमात!</string>
+    <string name="game_checkmate_body">%1$s शहमात हो गया। खेल समाप्त।</string>
+    <string name="game_over_title">खेल समाप्त</string>
+    <string name="action_new_game">नया खेल</string>
+    <string name="action_home">होम</string>
+    <string name="action_leave">खेल छोड़ें</string>
+    <string name="action_cancel">रद्द करें</string>
+    <string name="dialog_leave_title">क्या यह खेल छोड़ना है?</string>
+    <string name="dialog_leave_body">आपकी मौजूदा व्यवस्था और चालें खो जाएँगी।</string>
+    <string name="cd_back">वापस</string>
+    <string name="cd_app_logo">ChessPoints लोगो</string>
+</resources>

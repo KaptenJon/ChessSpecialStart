@@ -93,6 +93,36 @@ class MoveEngineTest {
     }
 
     @Test
+    fun kingCannotMoveIntoAnAttackedSquare() {
+        val position = positionWith(
+            sideToMove = Color.WHITE,
+            "e1" to Piece(PieceType.KING, Color.WHITE),
+            "a8" to Piece(PieceType.KING, Color.BLACK),
+            "e8" to Piece(PieceType.ROOK, Color.BLACK),
+        )
+
+        val kingMoves = MoveEngine.legalMoves(position, sq("e1")).map { it.to.algebraic }.toSet()
+
+        assertFalse("e2" in kingMoves)
+        assertTrue("f2" in kingMoves)
+        assertTrue("d2" in kingMoves)
+    }
+
+    @Test
+    fun aMoveThatLeavesTheMovingSideKingInCheckIsNotLegal() {
+        val position = positionWith(
+            sideToMove = Color.BLACK,
+            "e8" to Piece(PieceType.KING, Color.BLACK),
+            "a7" to Piece(PieceType.PAWN, Color.BLACK),
+            "e1" to Piece(PieceType.ROOK, Color.WHITE),
+            "a1" to Piece(PieceType.KING, Color.WHITE),
+        )
+
+        val illegal = MoveEngine.apply(position, MoveRequest(from = sq("a8"), to = sq("a7")))
+        assertIs<MoveApplicationResult.Illegal>(illegal)
+    }
+
+    @Test
     fun generatesExpectedPawnMovesOnASparseBoard() {
         val position = positionWith(
             sideToMove = Color.WHITE,
@@ -115,7 +145,7 @@ class MoveEngineTest {
         val position = positionWith(
             sideToMove = Color.BLACK,
             "a1" to Piece(PieceType.KING, Color.WHITE),
-            "e1" to Piece(PieceType.ROOK, Color.WHITE),
+            "e7" to Piece(PieceType.QUEEN, Color.WHITE),
             "e8" to Piece(PieceType.KING, Color.BLACK),
         )
 
@@ -124,6 +154,27 @@ class MoveEngineTest {
         val check = assertIs<PositionStatus.Check>(status)
         assertEquals(Color.BLACK, check.checkedColor)
         assertTrue(MoveEngine.isInCheck(position, Color.BLACK))
+    }
+
+    @Test
+    fun whileInCheckOnlyMovesThatResolveCheckAreLegal() {
+        val position = positionWith(
+            sideToMove = Color.BLACK,
+            "a1" to Piece(PieceType.KING, Color.WHITE),
+            "e1" to Piece(PieceType.ROOK, Color.WHITE),
+            "e8" to Piece(PieceType.KING, Color.BLACK),
+            "a7" to Piece(PieceType.PAWN, Color.BLACK),
+        )
+
+        assertTrue(MoveEngine.isInCheck(position, Color.BLACK))
+        assertTrue(
+            MoveEngine.legalMoves(position).none {
+                it.piece.type == PieceType.PAWN && it.from == sq("a7")
+            },
+        )
+        assertIs<MoveApplicationResult.Illegal>(
+            MoveEngine.apply(position, MoveRequest(from = sq("a7"), to = sq("a6"))),
+        )
     }
 
     @Test
@@ -139,6 +190,37 @@ class MoveEngineTest {
 
         val checkmate = assertIs<PositionStatus.Checkmate>(status)
         assertEquals(Color.WHITE, checkmate.winner)
+    }
+
+    @Test
+    fun applyingTheMatingMoveReportsTheWinningOutcome() {
+        val position = positionWith(
+            sideToMove = Color.WHITE,
+            "f6" to Piece(PieceType.KING, Color.WHITE),
+            "g6" to Piece(PieceType.QUEEN, Color.WHITE),
+            "h8" to Piece(PieceType.KING, Color.BLACK),
+        )
+
+        val result = assertIs<MoveApplicationResult.Success>(
+            MoveEngine.apply(position, MoveRequest(from = sq("g6"), to = sq("g7"))),
+        )
+
+        val checkmate = assertIs<PositionStatus.Checkmate>(result.status)
+        assertEquals(Color.WHITE, checkmate.winner)
+        assertTrue(MoveEngine.legalMoves(result.position).isEmpty())
+    }
+
+    @Test
+    fun checkmateLeavesTheCheckedSideWithNoLegalMoves() {
+        val position = positionWith(
+            sideToMove = Color.BLACK,
+            "f6" to Piece(PieceType.KING, Color.WHITE),
+            "g7" to Piece(PieceType.QUEEN, Color.WHITE),
+            "h8" to Piece(PieceType.KING, Color.BLACK),
+        )
+
+        assertIs<PositionStatus.Checkmate>(MoveEngine.evaluate(position))
+        assertTrue(MoveEngine.legalMoves(position).isEmpty())
     }
 
     @Test
@@ -227,6 +309,47 @@ class MoveEngineTest {
         assertEquals(Piece(PieceType.ROOK, Color.WHITE), promoted.position.board[sq("a8")])
         assertNull(promoted.position.board[sq("a7")])
     }
+
+    @Test
+    fun aKingCannotMoveIntoCheckFromAnEnemyRook() {
+        val position = positionWith(
+            sideToMove = Color.WHITE,
+            "e1" to Piece(PieceType.KING, Color.WHITE),
+            "e8" to Piece(PieceType.KING, Color.BLACK),
+            "a2" to Piece(PieceType.ROOK, Color.BLACK),
+        )
+
+        assertTrue(MoveEngine.legalMoves(position, sq("e1")).none { it.to == sq("e2") })
+    }
+
+    @Test
+    fun capturingTheKingIsNeverA_LegalMove() {
+        val position = positionWith(
+            sideToMove = Color.WHITE,
+            "e1" to Piece(PieceType.KING, Color.WHITE),
+            "e8" to Piece(PieceType.KING, Color.BLACK),
+            "e7" to Piece(PieceType.QUEEN, Color.WHITE),
+        )
+
+        val result = assertIs<MoveApplicationResult.Illegal>(
+            MoveEngine.apply(position, MoveRequest(sq("e7"), sq("e8"))),
+        )
+
+        assertIs<MoveRejection.IllegalMove>(result.reason)
+        assertEquals(Piece(PieceType.KING, Color.BLACK), position.board[sq("e8")])
+    }
+
+    @Test
+    fun aKingCannotCaptureAnAdjacentKing() {
+        val position = positionWith(
+            sideToMove = Color.WHITE,
+            "e1" to Piece(PieceType.KING, Color.WHITE),
+            "e2" to Piece(PieceType.KING, Color.BLACK),
+        )
+
+        assertTrue(MoveEngine.legalMoves(position, sq("e1")).none { it.to == sq("e2") })
+    }
+
 }
 
 private fun assertMoveTargets(position: GamePosition, from: String, expected: Set<String>) {

@@ -129,7 +129,12 @@ class AiMoveEngine {
         onNode()
 
         val status = MoveEngine.evaluate(position)
-        if (depth == 0 || status is PositionStatus.Checkmate || status is PositionStatus.Draw) {
+        if (
+            depth == 0 ||
+            status is PositionStatus.Checkmate ||
+            status is PositionStatus.KingCaptured ||
+            status is PositionStatus.Draw
+        ) {
             return evaluatePosition(position, status, rootColor, ply)
         }
 
@@ -196,6 +201,7 @@ class AiMoveEngine {
     ): Int =
         when (status) {
             is PositionStatus.Checkmate,
+            is PositionStatus.KingCaptured,
             is PositionStatus.Draw,
             -> scoreStatus(status, rootColor, ply)
 
@@ -211,6 +217,7 @@ class AiMoveEngine {
     ): Int =
         when (status) {
             is PositionStatus.Checkmate -> if (status.winner == rootColor) MATE_SCORE - ply else -MATE_SCORE + ply
+            is PositionStatus.KingCaptured -> if (status.winner == rootColor) MATE_SCORE - ply else -MATE_SCORE + ply
             is PositionStatus.Draw -> {
                 when (status.reason) {
                     DrawReason.STALEMATE,

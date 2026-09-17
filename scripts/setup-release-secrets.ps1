@@ -33,7 +33,16 @@ function Fail([string]$Message) {
 }
 
 function Get-JavaMajorVersion([string]$JavaExecutable) {
-    $versionOutput = & $JavaExecutable -version 2>&1
+    # java -version writes its banner to stderr; capture it without treating it as a script error.
+    $savedErrorActionPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = "Continue"
+        $versionOutput = & $JavaExecutable -version 2>&1
+    }
+    finally {
+        $ErrorActionPreference = $savedErrorActionPreference
+    }
+
     if ($LASTEXITCODE -ne 0) {
         return $null
     }
@@ -348,6 +357,41 @@ function Invoke-KeytoolGenerate(
     }
 }
 
+function ConvertTo-WindowsProcessArgument([string]$Value) {
+    if ($null -eq $Value -or $Value.Length -eq 0) {
+        return '""'
+    }
+
+    $builder = New-Object System.Text.StringBuilder
+    [void]$builder.Append('"')
+    $backslashCount = 0
+
+    foreach ($character in $Value.ToCharArray()) {
+        if ($character -eq '\') {
+            $backslashCount++
+            continue
+        }
+
+        if ($character -eq '"') {
+            [void]$builder.Append(('\' * (($backslashCount * 2) + 1)))
+            [void]$builder.Append('"')
+        } else {
+            if ($backslashCount -gt 0) {
+                [void]$builder.Append(('\' * $backslashCount))
+            }
+            [void]$builder.Append($character)
+        }
+
+        $backslashCount = 0
+    }
+
+    if ($backslashCount -gt 0) {
+        [void]$builder.Append(('\' * ($backslashCount * 2)))
+    }
+    [void]$builder.Append('"')
+    return $builder.ToString()
+}
+
 function Invoke-GhSecretSet([string]$GhPath, [string]$RepoName, [string]$SecretName, [string]$SecretValue) {
     if ($DryRun) {
         Write-Step "Dry run: would set $SecretName on $RepoName"
@@ -356,11 +400,17 @@ function Invoke-GhSecretSet([string]$GhPath, [string]$RepoName, [string]$SecretN
 
     $startInfo = New-Object System.Diagnostics.ProcessStartInfo
     $startInfo.FileName = $GhPath
-    $startInfo.ArgumentList.Add("secret")
-    $startInfo.ArgumentList.Add("set")
-    $startInfo.ArgumentList.Add($SecretName)
-    $startInfo.ArgumentList.Add("--repo")
-    $startInfo.ArgumentList.Add($RepoName)
+    $argumentValues = @("secret", "set", $SecretName, "--repo", $RepoName)
+    if ($null -ne $startInfo.PSObject.Properties["ArgumentList"]) {
+        foreach ($argumentValue in $argumentValues) {
+            [void]$startInfo.ArgumentList.Add($argumentValue)
+        }
+    } else {
+        # Windows PowerShell/.NET Framework does not expose ArgumentList.
+        $startInfo.Arguments = ($argumentValues | ForEach-Object {
+            ConvertTo-WindowsProcessArgument $_
+        }) -join " "
+    }
     $startInfo.RedirectStandardInput = $true
     $startInfo.RedirectStandardOutput = $true
     $startInfo.RedirectStandardError = $true

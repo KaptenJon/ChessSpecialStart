@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Välj ett spelläge</string>
+    <string name="title_build_and_place">Bygg och placera</string>
+    <string name="title_place_pieces">Placera dina pjäser</string>
+    <string name="title_play_match">Spela partiet</string>
+
+    <string name="home_hero_title">Köp din armé.\nBygg brädet. Spela sedan.</string>
+    <string name="home_hero_body">Börja med en budget på %1$d poäng, värva %2$d pjäser, placera dem på din sida och låt partiet börja.</string>
+    <string name="home_section_mode">Välj ett spelläge</string>
+    <string name="home_mode_two_player_title">2 spelare</string>
+    <string name="home_mode_two_player_subtitle">Turas om på samma enhet för värvning, placering och parti.</string>
+    <string name="home_mode_ai_title">Mot AI</string>
+    <string name="home_mode_ai_subtitle">Låt den inbyggda motståndaren värva, placera och spela mot dig.</string>
+    <string name="home_start_button">Köp och placera pjäser</string>
+
+    <string name="phase_step_setup">Uppställning · Köp och placera</string>
+    <string name="phase_step_place">Steg 2 · Placera</string>
+    <string name="badge_vs_ai">Mot AI</string>
+    <string name="placement_header_build">%1$s bygger en armé</string>
+    <string name="placement_header_place">%1$s placerar härnäst</string>
+    <string name="placement_zone_hint">Tillåtna rader %1$d–%2$d</string>
+    <string name="placement_section_unplaced">Oplacerade pjäser</string>
+    <string name="draft_section_drag">Dra en pjäs till en tillåten ruta</string>
+    <string name="draft_drop_hint">Varje släpp köper och placerar exakt en pjäs. Antalet i butiken uppdateras först efter ett giltigt släpp.</string>
+    <string name="draft_auto_finish">Uppställningen avslutas automatiskt efter den sista pjäsen.</string>
+    <string name="draft_metric_budget">Budget</string>
+    <string name="draft_metric_army">Armé</string>
+    <string name="draft_king_free">Gratis och obligatorisk</string>
+    <string name="cd_drag_piece">Dra %1$s till brädet</string>
+    <string name="shop_piece_cost">%1$d p</string>
+
+    <string name="game_turn_title">%1$s ska dra</string>
+    <string name="game_badge_waiting">Väntar</string>
+    <string name="game_captured_by_white">Slagna av vit</string>
+    <string name="game_captured_by_black">Slagna av svart</string>
+    <string name="game_captured_points">%1$d p</string>
+    <string name="game_no_captures">Inga slagna pjäser än.</string>
+    <string name="promotion_title">Välj promovering</string>
+    <string name="promotion_body">Din bonde nådde sista raden.</string>
+
+    <string name="piece_pawn">Bonde</string>
+    <string name="piece_knight">Springare</string>
+    <string name="piece_bishop">Löpare</string>
+    <string name="piece_rook">Torn</string>
+    <string name="piece_queen">Dam</string>
+    <string name="piece_king">Kung</string>
+    <string name="color_white">Vit</string>
+    <string name="color_black">Svart</string>
+    <string name="label_you">Du</string>
+    <string name="label_ai">AI</string>
+    <string name="cd_chess_piece">%1$s %2$s schackpjäs</string>
+
+    <string name="helper_waiting_ai_army">Väntar på AI:ns armé.</string>
+    <string name="helper_ai_preparing_army">AI:n förbereder sin armé.</string>
+    <string name="helper_build_army">Bygg en armé med %1$d pjäser, varav en obligatorisk kung.</string>
+    <string name="helper_waiting_ai_placement">Väntar på AI:ns placering.</string>
+    <string name="helper_ai_choosing_placement">AI:n väljer en placering.</string>
+    <string name="helper_pick_piece">Dra en pjäs från butiken till en markerad ruta.</string>
+    <string name="helper_tap_zone">Släpp på en ruta inom placeringszonen för %1$s.</string>
+
+    <string name="banner_select_piece_first">Välj en pjäs först.</string>
+    <string name="banner_illegal_destination">Den rutan är inte tillåten för den valda pjäsen.</string>
+    <string name="ai_no_placement">AI:n hittade ingen tillåten placering.</string>
+    <string name="ai_no_move">AI:n hittade inget tillåtet drag.</string>
+
+    <string name="status_to_move">%1$s ska dra.</string>
+    <string name="status_check">%1$s står i schack.</string>
+    <string name="status_checkmate">%1$s satte schackmatt.</string>
+    <string name="status_king_captured">%1$s slog kungen.</string>
+    <string name="status_draw">Remi: %1$s.</string>
+    <string name="outcome_checkmate">%1$s vinner på schackmatt.</string>
+    <string name="outcome_king_captured">%1$s vinner genom att slå kungen.</string>
+    <string name="draw_stalemate">patt</string>
+    <string name="draw_insufficient_material">otillräckligt material</string>
+
+    <string name="error_negative_piece_count">Antalet %1$s kan inte vara negativt (%2$d).</string>
+    <string name="error_piece_count_mismatch">Förväntade exakt %1$d pjäser men fick %2$d.</string>
+    <string name="error_king_count_mismatch">Förväntade exakt %1$d kung men fick %2$d.</string>
+    <string name="error_budget_exceeded">Armén kostar %1$d poäng, vilket överskrider budgeten på %2$d poäng.</string>
+    <string name="error_piece_limit_reached">Armén har redan %1$d pjäser.</string>
+    <string name="error_king_already_selected">Endast en kung är tillåten.</string>
+    <string name="error_purchase_over_budget">Köpet överskrider budgeten med %1$d poäng; %2$d platser skulle fortfarande kräva minst %3$d poäng.</string>
+    <string name="error_cannot_complete_army">Köpet skulle lämna %1$d platser men bara %2$d poäng; minst %3$d poäng krävs för att fylla armén.</string>
+    <string name="error_wrong_placement_turn">%1$s placerar härnäst, inte %2$s.</string>
+    <string name="error_piece_not_available">%1$s har inga %2$s kvar att placera.</string>
+    <string name="error_square_occupied">Rutan %1$s är redan upptagen.</string>
+    <string name="error_outside_zone">Rutan %1$s ligger utanför placeringszonen för %2$s (rader %3$d–%4$d).</string>
+    <string name="error_duplicate_draft">%1$s har redan lämnat in en armé.</string>
+    <string name="error_wrong_phase">Den åtgärden är inte tillgänglig just nu.</string>
+    <string name="error_no_piece_at_source">Ingen pjäs hittades på %1$s.</string>
+    <string name="error_wrong_color_turn">Det är %1$s som ska dra, inte %2$s.</string>
+    <string name="error_illegal_move">Draget %1$s–%2$s är inte tillåtet.</string>
+    <string name="error_unknown">Något gick fel.</string>
+    <plurals name="draft_points_left">
+        <item quantity="one">%1$d poäng kvar</item>
+        <item quantity="other">%1$d poäng kvar</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="one">%1$d plats kvar</item>
+        <item quantity="other">%1$d platser kvar</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">Schack!</string>
+    <string name="game_check_body">%1$s står i schack - sätt kungen i säkerhet.</string>
+    <string name="game_checkmate_title">Schackmatt!</string>
+    <string name="game_checkmate_body">%1$s är schackmatt. Partiet är slut.</string>
+    <string name="game_over_title">Partiet är slut</string>
+    <string name="action_new_game">Nytt spel</string>
+    <string name="action_home">Hem</string>
+    <string name="action_leave">Lämna partiet</string>
+    <string name="action_cancel">Avbryt</string>
+    <string name="dialog_leave_title">Lämna partiet?</string>
+    <string name="dialog_leave_body">Din nuvarande uppställning och dina drag går förlorade.</string>
+    <string name="cd_back">Tillbaka</string>
+    <string name="cd_app_logo">ChessPoints-logga</string>
+</resources>

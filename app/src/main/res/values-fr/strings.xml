@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Choisir un mode</string>
+    <string name="title_build_and_place">Acheter et placer</string>
+    <string name="title_place_pieces">Placez vos pièces</string>
+    <string name="title_play_match">Jouer la partie</string>
+
+    <string name="home_hero_title">Achetez votre armée.\nComposez l\'échiquier. Puis jouez.</string>
+    <string name="home_hero_body">Commencez avec un budget de %1$d points, recrutez %2$d pièces, placez-les de votre côté et lancez la partie.</string>
+    <string name="home_section_mode">Choisir un mode</string>
+    <string name="home_mode_two_player_title">2 joueurs</string>
+    <string name="home_mode_two_player_subtitle">Jeu à tour de rôle sur un seul appareil : achat, placement et partie.</string>
+    <string name="home_mode_ai_title">Contre l\'IA</string>
+    <string name="home_mode_ai_subtitle">L\'adversaire intégré recrute, place ses pièces et joue contre vous.</string>
+    <string name="home_start_button">Acheter et placer les pièces</string>
+
+    <string name="phase_step_setup">Mise en place · Acheter et placer</string>
+    <string name="phase_step_place">Étape 2 · Placement</string>
+    <string name="badge_vs_ai">Contre l\'IA</string>
+    <string name="placement_header_build">%1$s compose son armée</string>
+    <string name="placement_header_place">C\'est à %1$s de placer</string>
+    <string name="placement_zone_hint">Rangées autorisées %1$d–%2$d</string>
+    <string name="placement_section_unplaced">Pièces non placées</string>
+    <string name="draft_section_drag">Faites glisser une pièce vers une case autorisée</string>
+    <string name="draft_drop_hint">Chaque dépôt achète et place exactement une pièce. Le compteur de la boutique ne change qu\'après un dépôt valide.</string>
+    <string name="draft_auto_finish">La mise en place se termine automatiquement après la dernière pièce.</string>
+    <string name="draft_metric_budget">Budget</string>
+    <string name="draft_metric_army">Armée</string>
+    <string name="draft_king_free">Gratuit et obligatoire</string>
+    <string name="cd_drag_piece">Faites glisser %1$s sur l\'échiquier</string>
+    <string name="shop_piece_cost">%1$d pts</string>
+
+    <string name="game_turn_title">Au tour de %1$s</string>
+    <string name="game_badge_waiting">En attente</string>
+    <string name="game_captured_by_white">Capturées par les Blancs</string>
+    <string name="game_captured_by_black">Capturées par les Noirs</string>
+    <string name="game_captured_points">%1$d pts</string>
+    <string name="game_no_captures">Aucune capture pour l\'instant.</string>
+    <string name="promotion_title">Choisir la promotion</string>
+    <string name="promotion_body">Votre pion a atteint la dernière rangée.</string>
+
+    <string name="piece_pawn">Pion</string>
+    <string name="piece_knight">Cavalier</string>
+    <string name="piece_bishop">Fou</string>
+    <string name="piece_rook">Tour</string>
+    <string name="piece_queen">Dame</string>
+    <string name="piece_king">Roi</string>
+    <string name="color_white">Blancs</string>
+    <string name="color_black">Noirs</string>
+    <string name="label_you">Vous</string>
+    <string name="label_ai">IA</string>
+    <string name="cd_chess_piece">Pièce d\'échecs : %1$s %2$s</string>
+
+    <string name="helper_waiting_ai_army">En attente de l\'armée de l\'IA.</string>
+    <string name="helper_ai_preparing_army">L\'IA prépare son armée.</string>
+    <string name="helper_build_army">Composez une armée de %1$d pièces avec un roi obligatoire.</string>
+    <string name="helper_waiting_ai_placement">En attente du placement de l\'IA.</string>
+    <string name="helper_ai_choosing_placement">L\'IA choisit un placement.</string>
+    <string name="helper_pick_piece">Faites glisser une pièce de la boutique vers une case surlignée.</string>
+    <string name="helper_tap_zone">Déposez-la sur une case de la zone de placement de %1$s.</string>
+
+    <string name="banner_select_piece_first">Sélectionnez d\'abord une pièce.</string>
+    <string name="banner_illegal_destination">Cette destination n\'est pas légale pour la pièce sélectionnée.</string>
+    <string name="ai_no_placement">L\'IA n\'a trouvé aucun placement légal.</string>
+    <string name="ai_no_move">L\'IA n\'a trouvé aucun coup légal.</string>
+
+    <string name="status_to_move">Au tour de %1$s.</string>
+    <string name="status_check">%1$s est en échec.</string>
+    <string name="status_checkmate">%1$s a donné échec et mat.</string>
+    <string name="status_king_captured">%1$s a capturé le roi.</string>
+    <string name="status_draw">Nulle : %1$s.</string>
+    <string name="outcome_checkmate">%1$s gagne par échec et mat.</string>
+    <string name="outcome_king_captured">%1$s gagne en capturant le roi.</string>
+    <string name="draw_stalemate">pat</string>
+    <string name="draw_insufficient_material">matériel insuffisant</string>
+
+    <string name="error_negative_piece_count">Le nombre de %1$s ne peut pas être négatif (%2$d).</string>
+    <string name="error_piece_count_mismatch">%1$d pièces attendues, mais %2$d reçues.</string>
+    <string name="error_king_count_mismatch">%1$d roi attendu, mais %2$d reçus.</string>
+    <string name="error_budget_exceeded">L\'armée coûte %1$d points et dépasse le budget de %2$d points.</string>
+    <string name="error_piece_limit_reached">L\'armée compte déjà %1$d pièces.</string>
+    <string name="error_king_already_selected">Un seul roi est autorisé.</string>
+    <string name="error_purchase_over_budget">Cet achat dépasse le budget de %1$d points ; %2$d emplacements exigeraient encore au moins %3$d points.</string>
+    <string name="error_cannot_complete_army">Cet achat laisserait %1$d emplacements avec seulement %2$d points ; au moins %3$d points sont nécessaires pour compléter l\'armée.</string>
+    <string name="error_wrong_placement_turn">C\'est à %1$s de placer, pas à %2$s.</string>
+    <string name="error_piece_not_available">%1$s n\'a plus de %2$s à placer.</string>
+    <string name="error_square_occupied">La case %1$s est déjà occupée.</string>
+    <string name="error_outside_zone">La case %1$s est hors de la zone de placement de %2$s (rangées %3$d–%4$d).</string>
+    <string name="error_duplicate_draft">%1$s a déjà soumis une armée.</string>
+    <string name="error_wrong_phase">Cette action n\'est pas disponible pour le moment.</string>
+    <string name="error_no_piece_at_source">Aucune pièce trouvée sur %1$s.</string>
+    <string name="error_wrong_color_turn">C\'est au tour de %1$s, pas de %2$s.</string>
+    <string name="error_illegal_move">Le coup %1$s–%2$s n\'est pas légal.</string>
+    <string name="error_unknown">Une erreur est survenue.</string>
+    <plurals name="draft_points_left">
+        <item quantity="one">%1$d point restant</item>
+        <item quantity="many">%1$d points restants</item>
+        <item quantity="other">%1$d points restants</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="one">%1$d emplacement restant</item>
+        <item quantity="many">%1$d emplacements restants</item>
+        <item quantity="other">%1$d emplacements restants</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">Échec !</string>
+    <string name="game_check_body">%1$s est en échec - mettez le roi en sécurité.</string>
+    <string name="game_checkmate_title">Échec et mat !</string>
+    <string name="game_checkmate_body">%1$s est mat. La partie est terminée.</string>
+    <string name="game_over_title">Partie terminée</string>
+    <string name="action_new_game">Nouvelle partie</string>
+    <string name="action_home">Accueil</string>
+    <string name="action_leave">Quitter la partie</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="dialog_leave_title">Quitter cette partie ?</string>
+    <string name="dialog_leave_body">Votre installation et vos coups actuels seront perdus.</string>
+    <string name="cd_back">Retour</string>
+    <string name="cd_app_logo">Logo ChessPoints</string>
+</resources>

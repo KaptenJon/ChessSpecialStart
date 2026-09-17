@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ChessPoints king mark. Shared by the launcher foreground and the splash icon. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.86"
+        android:scaleY="0.86">
+
+        <!-- Crown cross -->
+        <path
+            android:fillColor="@color/brand_gold"
+            android:pathData="M50,10h8v8h8v8h-8v8h-8v-8h-8v-8h8z" />
+
+        <!-- Crown -->
+        <path
+            android:fillColor="@color/brand_gold"
+            android:pathData="M38,50L42,37C48,32 60,32 66,37L70,50Z" />
+
+        <!-- Collar -->
+        <path
+            android:fillColor="@color/brand_gold_light"
+            android:pathData="M36,50h36v8h-36z" />
+
+        <!-- Body -->
+        <path
+            android:fillColor="@color/brand_gold"
+            android:pathData="M41,58C41,74 35,80 32,88h44c-3,-8 -9,-14 -9,-30Z" />
+
+        <!-- Base -->
+        <path
+            android:fillColor="@color/brand_gold_light"
+            android:pathData="M28,88h52v9h-52z" />
+
+        <!-- Point marker: the "points" half of ChessPoints -->
+        <path
+            android:fillColor="@color/brand_green_deep"
+            android:pathData="M54,62l6,7l-6,7l-6,-7z" />
+    </group>
+</vector>

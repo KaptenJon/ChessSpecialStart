@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Modus wählen</string>
+    <string name="title_build_and_place">Kaufen und aufstellen</string>
+    <string name="title_place_pieces">Figuren aufstellen</string>
+    <string name="title_play_match">Partie spielen</string>
+
+    <string name="home_hero_title">Kaufe deine Armee.\nBaue das Brett. Dann spiele.</string>
+    <string name="home_hero_body">Starte mit einem Budget von %1$d Punkten, wähle %2$d Figuren, stelle sie auf deiner Seite auf und leg los.</string>
+    <string name="home_section_mode">Modus wählen</string>
+    <string name="home_mode_two_player_title">2 Spieler</string>
+    <string name="home_mode_two_player_subtitle">Abwechselnd auf einem Gerät: kaufen, aufstellen und spielen.</string>
+    <string name="home_mode_ai_title">Gegen KI</string>
+    <string name="home_mode_ai_subtitle">Der eingebaute Gegner kauft, stellt auf und spielt gegen dich.</string>
+    <string name="home_start_button">Figuren kaufen und aufstellen</string>
+
+    <string name="phase_step_setup">Aufbau · Kaufen und aufstellen</string>
+    <string name="phase_step_place">Schritt 2 · Aufstellen</string>
+    <string name="badge_vs_ai">Gegen KI</string>
+    <string name="placement_header_build">%1$s stellt eine Armee zusammen</string>
+    <string name="placement_header_place">%1$s ist mit dem Aufstellen dran</string>
+    <string name="placement_zone_hint">Erlaubte Reihen %1$d–%2$d</string>
+    <string name="placement_section_unplaced">Nicht aufgestellte Figuren</string>
+    <string name="draft_section_drag">Ziehe eine Figur auf ein erlaubtes Feld</string>
+    <string name="draft_drop_hint">Jedes Ablegen kauft und platziert genau eine Figur. Der Shop-Zähler ändert sich erst nach einem gültigen Ablegen.</string>
+    <string name="draft_auto_finish">Der Aufbau endet automatisch nach der letzten Figur.</string>
+    <string name="draft_metric_budget">Budget</string>
+    <string name="draft_metric_army">Armee</string>
+    <string name="draft_king_free">Kostenlos und Pflicht</string>
+    <string name="cd_drag_piece">%1$s auf das Brett ziehen</string>
+    <string name="shop_piece_cost">%1$d Pkt.</string>
+
+    <string name="game_turn_title">%1$s am Zug</string>
+    <string name="game_badge_waiting">Wartet</string>
+    <string name="game_captured_by_white">Von Weiß geschlagen</string>
+    <string name="game_captured_by_black">Von Schwarz geschlagen</string>
+    <string name="game_captured_points">%1$d Pkt.</string>
+    <string name="game_no_captures">Noch keine geschlagenen Figuren.</string>
+    <string name="promotion_title">Umwandlung wählen</string>
+    <string name="promotion_body">Dein Bauer hat die letzte Reihe erreicht.</string>
+
+    <string name="piece_pawn">Bauer</string>
+    <string name="piece_knight">Springer</string>
+    <string name="piece_bishop">Läufer</string>
+    <string name="piece_rook">Turm</string>
+    <string name="piece_queen">Dame</string>
+    <string name="piece_king">König</string>
+    <string name="color_white">Weiß</string>
+    <string name="color_black">Schwarz</string>
+    <string name="label_you">Du</string>
+    <string name="label_ai">KI</string>
+    <string name="cd_chess_piece">Schachfigur: %1$s %2$s</string>
+
+    <string name="helper_waiting_ai_army">Warte auf die Armee der KI.</string>
+    <string name="helper_ai_preparing_army">Die KI stellt ihre Armee zusammen.</string>
+    <string name="helper_build_army">Stelle eine Armee aus %1$d Figuren mit einem Pflicht-König zusammen.</string>
+    <string name="helper_waiting_ai_placement">Warte auf die Aufstellung der KI.</string>
+    <string name="helper_ai_choosing_placement">Die KI wählt eine Aufstellung.</string>
+    <string name="helper_pick_piece">Ziehe eine Figur aus dem Shop auf ein markiertes Feld.</string>
+    <string name="helper_tap_zone">Lege sie auf einem Feld in der Aufstellungszone von %1$s ab.</string>
+
+    <string name="banner_select_piece_first">Wähle zuerst eine Figur.</string>
+    <string name="banner_illegal_destination">Dieses Ziel ist für die gewählte Figur nicht erlaubt.</string>
+    <string name="ai_no_placement">Die KI fand keine erlaubte Aufstellung.</string>
+    <string name="ai_no_move">Die KI fand keinen legalen Zug.</string>
+
+    <string name="status_to_move">%1$s ist am Zug.</string>
+    <string name="status_check">%1$s steht im Schach.</string>
+    <string name="status_checkmate">%1$s setzte matt.</string>
+    <string name="status_king_captured">%1$s hat den König geschlagen.</string>
+    <string name="status_draw">Remis: %1$s.</string>
+    <string name="outcome_checkmate">%1$s gewinnt durch Schachmatt.</string>
+    <string name="outcome_king_captured">%1$s gewinnt durch Schlagen des Königs.</string>
+    <string name="draw_stalemate">Patt</string>
+    <string name="draw_insufficient_material">ungenügendes Material</string>
+
+    <string name="error_negative_piece_count">Die Anzahl %1$s darf nicht negativ sein (%2$d).</string>
+    <string name="error_piece_count_mismatch">Genau %1$d Figuren erwartet, aber %2$d erhalten.</string>
+    <string name="error_king_count_mismatch">Genau %1$d König erwartet, aber %2$d erhalten.</string>
+    <string name="error_budget_exceeded">Die Armee kostet %1$d Punkte und überschreitet damit das Budget von %2$d Punkten.</string>
+    <string name="error_piece_limit_reached">Die Armee hat bereits %1$d Figuren.</string>
+    <string name="error_king_already_selected">Nur ein König ist erlaubt.</string>
+    <string name="error_purchase_over_budget">Dieser Kauf überschreitet das Budget um %1$d Punkte; für %2$d Plätze wären noch mindestens %3$d Punkte nötig.</string>
+    <string name="error_cannot_complete_army">Dieser Kauf ließe %1$d Plätze bei nur %2$d Punkten übrig; für die vollständige Armee sind mindestens %3$d Punkte nötig.</string>
+    <string name="error_wrong_placement_turn">%1$s stellt als Nächstes auf, nicht %2$s.</string>
+    <string name="error_piece_not_available">%1$s hat keine %2$s mehr zum Aufstellen.</string>
+    <string name="error_square_occupied">Feld %1$s ist bereits besetzt.</string>
+    <string name="error_outside_zone">Feld %1$s liegt außerhalb der Aufstellungszone von %2$s (Reihen %3$d–%4$d).</string>
+    <string name="error_duplicate_draft">%1$s hat bereits eine Armee eingereicht.</string>
+    <string name="error_wrong_phase">Diese Aktion ist gerade nicht verfügbar.</string>
+    <string name="error_no_piece_at_source">Keine Figur auf %1$s gefunden.</string>
+    <string name="error_wrong_color_turn">%1$s ist am Zug, nicht %2$s.</string>
+    <string name="error_illegal_move">Der Zug %1$s–%2$s ist nicht erlaubt.</string>
+    <string name="error_unknown">Etwas ist schiefgelaufen.</string>
+    <plurals name="draft_points_left">
+        <item quantity="one">%1$d Punkt übrig</item>
+        <item quantity="other">%1$d Punkte übrig</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="one">%1$d Platz übrig</item>
+        <item quantity="other">%1$d Plätze übrig</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">Schach!</string>
+    <string name="game_check_body">%1$s steht im Schach - bring den König in Sicherheit.</string>
+    <string name="game_checkmate_title">Schachmatt!</string>
+    <string name="game_checkmate_body">%1$s ist schachmatt. Die Partie ist vorbei.</string>
+    <string name="game_over_title">Partie beendet</string>
+    <string name="action_new_game">Neues Spiel</string>
+    <string name="action_home">Start</string>
+    <string name="action_leave">Partie verlassen</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="dialog_leave_title">Partie verlassen?</string>
+    <string name="dialog_leave_body">Deine aktuelle Aufstellung und deine Züge gehen verloren.</string>
+    <string name="cd_back">Zurück</string>
+    <string name="cd_app_logo">ChessPoints-Logo</string>
+</resources>

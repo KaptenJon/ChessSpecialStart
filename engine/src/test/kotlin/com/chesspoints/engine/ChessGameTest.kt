@@ -147,4 +147,57 @@ class ChessGameTest {
         assertEquals(Color.WHITE, playing.position.sideToMove)
         assertTrue(game.getLegalMoves().isNotEmpty())
     }
+
+    @Test
+    fun chessGameRejectsCapturingTheKing() {
+        val game = ChessGame()
+        val position = GamePosition(
+            board = Board.fromPieces(
+                Square.fromAlgebraic("e1")!! to Piece(PieceType.KING, Color.WHITE),
+                Square.fromAlgebraic("e8")!! to Piece(PieceType.KING, Color.BLACK),
+                Square.fromAlgebraic("e7")!! to Piece(PieceType.QUEEN, Color.WHITE),
+            ),
+            sideToMove = Color.WHITE,
+        )
+
+        val field = ChessGame::class.java.getDeclaredField("position")
+        field.isAccessible = true
+        field.set(game, position)
+
+        val result = assertIs<GameMoveResult.Rejected>(
+            game.makeMove(
+                MoveRequest(
+                    from = Square.fromAlgebraic("e7")!!,
+                    to = Square.fromAlgebraic("e8")!!,
+                ),
+            ),
+        )
+        assertIs<GameMoveError.IllegalMove>(result.reason)
+        assertIs<ChessGameState.Playing>(game.getGameState())
+    }
+
+    @Test
+    fun chessGameEndsAfterACheckmatingMove() {
+        val game = ChessGame()
+        val position = GamePosition(
+            board = Board.fromPieces(
+                Square.fromAlgebraic("f6")!! to Piece(PieceType.KING, Color.WHITE),
+                Square.fromAlgebraic("g6")!! to Piece(PieceType.QUEEN, Color.WHITE),
+                Square.fromAlgebraic("h8")!! to Piece(PieceType.KING, Color.BLACK),
+            ),
+            sideToMove = Color.WHITE,
+        )
+        val field = ChessGame::class.java.getDeclaredField("position")
+        field.isAccessible = true
+        field.set(game, position)
+
+        assertIs<GameMoveResult.Accepted>(
+            game.makeMove(MoveRequest(Square.fromAlgebraic("g6")!!, Square.fromAlgebraic("g7")!!)),
+        )
+        val state = assertIs<ChessGameState.GameOver>(game.getGameState())
+        assertEquals(GameOutcome.Checkmate(Color.WHITE), state.outcome)
+        assertIs<GameMoveResult.Rejected>(
+            game.makeMove(MoveRequest(Square.fromAlgebraic("f6")!!, Square.fromAlgebraic("f7")!!)),
+        )
+    }
 }

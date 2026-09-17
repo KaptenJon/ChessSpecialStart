@@ -8,3 +8,4 @@
 
 
 📌 Team update (2026-09-16T13:35:00+02:00): Android UI Dev wired `AiDrafter`, `AiPlacer`, and `AiMoveEngine` into the app-state gateway for solo play, but full local Gradle verification is still blocked by missing wrapper support / Android SDK Build-Tools 34 on this machine.
+📌 Team update (2026-09-16T23:02:26.826+02:00): King capture is an explicit terminal outcome for AI search; engine self-check and king-adjacency safety rules remain authoritative.

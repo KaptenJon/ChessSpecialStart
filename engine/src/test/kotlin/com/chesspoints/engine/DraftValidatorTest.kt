@@ -121,6 +121,56 @@ class DraftValidatorTest {
         assertEquals(2, valid.roster.countOf(PieceType.QUEEN))
         assertEquals(10, valid.roster.countOf(PieceType.PAWN))
     }
+
+    @Test
+    fun candidateGuardReservesEnoughBudgetForRemainingSlots() {
+        val nearlyFull = mapOf(
+            PieceType.KING to 1,
+            PieceType.QUEEN to 2,
+            PieceType.ROOK to 1,
+            PieceType.BISHOP to 0,
+            PieceType.KNIGHT to 0,
+            PieceType.PAWN to 11,
+        )
+
+        assertTrue(DraftValidator.canAddPiece(nearlyFull, PieceType.PAWN))
+        assertTrue(!DraftValidator.canAddPiece(nearlyFull, PieceType.QUEEN))
+    }
+
+    @Test
+    fun candidateGuardAccountsForAnUnboughtMandatoryKing() {
+        val fifteenNonKings = mapOf(
+            PieceType.KING to 0,
+            PieceType.QUEEN to 0,
+            PieceType.ROOK to 0,
+            PieceType.BISHOP to 0,
+            PieceType.KNIGHT to 0,
+            PieceType.PAWN to 15,
+        )
+
+        assertTrue(!DraftValidator.canAddPiece(fifteenNonKings, PieceType.PAWN))
+        assertTrue(DraftValidator.canAddPiece(fifteenNonKings, PieceType.KING))
+    }
+
+    @Test
+    fun additionValidationExplainsWhyAHighValueCandidateIsRejected() {
+        val nearlyFull = mapOf(
+            PieceType.KING to 1,
+            PieceType.QUEEN to 2,
+            PieceType.ROOK to 1,
+            PieceType.BISHOP to 0,
+            PieceType.KNIGHT to 0,
+            PieceType.PAWN to 11,
+        )
+
+        val rejected = assertIs<DraftPurchaseValidation.CannotCompleteArmy>(
+            DraftValidator.validateAddition(nearlyFull, PieceType.QUEEN),
+        )
+        assertEquals(0, rejected.remainingSlots)
+        assertEquals(-4, rejected.remainingBudget)
+        assertEquals(0, rejected.minimumRequiredBudget)
+        assertTrue(rejected.message.contains("exceeds the budget by 4 points"))
+    }
 }
 
 private inline fun <reified T : DraftValidationError> assertInvalidWith(

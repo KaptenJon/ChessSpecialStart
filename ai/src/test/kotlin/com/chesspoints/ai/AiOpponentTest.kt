@@ -13,6 +13,7 @@ import com.chesspoints.engine.Piece
 import com.chesspoints.engine.PieceType
 import com.chesspoints.engine.PlacementResult
 import com.chesspoints.engine.PlacementValidator
+import com.chesspoints.engine.PlacementRules
 import com.chesspoints.engine.Square
 import kotlin.random.Random
 import kotlin.test.Test
@@ -57,6 +58,83 @@ class AiOpponentTest {
         }
 
         assertTrue(state.isReadyToPlay())
+    }
+
+    @Test
+    fun setupPlacerChoosesAnEmptySquareForTheAiTurn() {
+        val board = Board.fromPieces(
+            Square.fromAlgebraic("e1")!! to Piece(PieceType.KING, Color.WHITE)
+        )
+        val choice = placer.nextSetupPlacement(
+            color = Color.BLACK,
+            remainingPieces = mapOf(PieceType.KING to 1),
+            board = board,
+            rules = PlacementRules(),
+        )
+
+        assertNotNull(choice)
+        assertEquals(PieceType.KING, choice.pieceType)
+        assertTrue(PlacementRules().zoneFor(Color.BLACK).contains(choice.square))
+        assertEquals(null, board[choice.square])
+    }
+
+    @Test
+    fun setupPlacerFillsAWholeArmyThroughTheAtomicSetupApi() {
+        val game = ChessGame()
+        val target = drafter.draft(Color.BLACK, random = Random(7)).counts
+        val placed = PieceType.entries.associateWith { 0 }.toMutableMap()
+
+        repeat(target.values.sum()) { index ->
+            // White (human) plays first in the alternating setup turn order.
+            val whiteSquare = (0..7)
+                .map { file -> Square(file, if (index < 8) 1 else 0) }
+                .first { square -> game.getSetupBoard()[square] == null }
+            assertIs<com.chesspoints.engine.SetupResult.Accepted>(
+                game.buyAndPlacePiece(
+                    Color.WHITE,
+                    if (index == 0) PieceType.KING else PieceType.PAWN,
+                    whiteSquare,
+                ),
+            )
+
+            val remaining = PieceType.entries.associateWith { type ->
+                target.getOrDefault(type, 0) - placed.getValue(type)
+            }
+            val choice = placer.nextSetupPlacement(
+                color = Color.BLACK,
+                remainingPieces = remaining,
+                board = game.getSetupBoard(),
+                rules = PlacementRules(),
+                purchasedCounts = placed.toMap(),
+            )
+            assertNotNull(choice, "AI stopped placing after ${placed.values.sum()} pieces")
+            assertIs<com.chesspoints.engine.SetupResult.Accepted>(
+                game.buyAndPlacePiece(Color.BLACK, choice.pieceType, choice.square),
+            )
+            placed[choice.pieceType] = placed.getValue(choice.pieceType) + 1
+        }
+
+        assertIs<ChessGameState.Playing>(game.getGameState())
+    }
+
+    @Test
+    fun setupPlacerSkipsPurchasesTheDraftRulesWouldReject() {
+        val purchased = PieceType.entries.associateWith { 0 }.toMutableMap().apply {
+            this[PieceType.KING] = 1
+            this[PieceType.QUEEN] = 3
+            this[PieceType.PAWN] = 5
+        }
+
+        val choice = placer.nextSetupPlacement(
+            color = Color.BLACK,
+            remainingPieces = mapOf(PieceType.QUEEN to 1, PieceType.PAWN to 1),
+            board = Board.empty(),
+            rules = PlacementRules(),
+            purchasedCounts = purchased.toMap(),
+        )
+
+        assertNotNull(choice)
+        assertEquals(PieceType.PAWN, choice.pieceType)
     }
 
     @Test

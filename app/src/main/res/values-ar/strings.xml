@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">اختر وضع اللعب</string>
+    <string name="title_build_and_place">اشترِ وضَع القطع</string>
+    <string name="title_place_pieces">ضَع قطعك</string>
+    <string name="title_play_match">العب المباراة</string>
+
+    <string name="home_hero_title">اشترِ جيشك.\nابنِ الرقعة. ثم العب.</string>
+    <string name="home_hero_body">ابدأ بميزانية %1$d نقطة، واختر %2$d قطعة، وضعها في جهتك، ثم لتبدأ المباراة.</string>
+    <string name="home_section_mode">اختر وضع اللعب</string>
+    <string name="home_mode_two_player_title">لاعبان</string>
+    <string name="home_mode_two_player_subtitle">بالتناوب على جهاز واحد: الشراء والوضع والمباراة.</string>
+    <string name="home_mode_ai_title">ضد الذكاء الاصطناعي</string>
+    <string name="home_mode_ai_subtitle">يقوم الخصم المدمج بالشراء والوضع واللعب ضدك.</string>
+    <string name="home_start_button">اشترِ القطع وضعها</string>
+
+    <string name="phase_step_setup">الإعداد · الشراء والوضع</string>
+    <string name="phase_step_place">الخطوة 2 · الوضع</string>
+    <string name="badge_vs_ai">ضد الذكاء الاصطناعي</string>
+    <string name="placement_header_build">%1$s يبني جيشه</string>
+    <string name="placement_header_place">الدور على %1$s للوضع</string>
+    <string name="placement_zone_hint">الصفوف المسموح بها %1$d–%2$d</string>
+    <string name="placement_section_unplaced">قطع لم تُوضع بعد</string>
+    <string name="draft_section_drag">اسحب قطعة إلى مربع مسموح به</string>
+    <string name="draft_drop_hint">كل إفلات يشتري ويضع قطعة واحدة بالضبط. ولا يتغير عدّاد المتجر إلا بعد إفلات صالح.</string>
+    <string name="draft_auto_finish">ينتهي الإعداد تلقائيًا بعد وضع القطعة الأخيرة.</string>
+    <string name="draft_metric_budget">الميزانية</string>
+    <string name="draft_metric_army">الجيش</string>
+    <string name="draft_king_free">مجاني وإلزامي</string>
+    <string name="cd_drag_piece">اسحب %1$s إلى الرقعة</string>
+    <string name="shop_piece_cost">%1$d نقطة</string>
+
+    <string name="game_turn_title">الدور على %1$s</string>
+    <string name="game_badge_waiting">في الانتظار</string>
+    <string name="game_captured_by_white">أسَرها الأبيض</string>
+    <string name="game_captured_by_black">أسَرها الأسود</string>
+    <string name="game_captured_points">%1$d نقطة</string>
+    <string name="game_no_captures">لا توجد قطع مأسورة بعد.</string>
+    <string name="promotion_title">اختر الترقية</string>
+    <string name="promotion_body">وصل بيدقك إلى الصف الأخير.</string>
+
+    <string name="piece_pawn">بيدق</string>
+    <string name="piece_knight">حصان</string>
+    <string name="piece_bishop">فيل</string>
+    <string name="piece_rook">رخ</string>
+    <string name="piece_queen">وزير</string>
+    <string name="piece_king">ملك</string>
+    <string name="color_white">الأبيض</string>
+    <string name="color_black">الأسود</string>
+    <string name="label_you">أنت</string>
+    <string name="label_ai">الذكاء الاصطناعي</string>
+    <string name="cd_chess_piece">قطعة شطرنج: %1$s %2$s</string>
+
+    <string name="helper_waiting_ai_army">في انتظار جيش الذكاء الاصطناعي.</string>
+    <string name="helper_ai_preparing_army">يقوم الذكاء الاصطناعي بتجهيز جيشه.</string>
+    <string name="helper_build_army">ابنِ جيشًا من %1$d قطعة مع ملك إلزامي.</string>
+    <string name="helper_waiting_ai_placement">في انتظار وضع الذكاء الاصطناعي.</string>
+    <string name="helper_ai_choosing_placement">يختار الذكاء الاصطناعي موضعًا.</string>
+    <string name="helper_pick_piece">اسحب قطعة من المتجر إلى مربع مُميّز.</string>
+    <string name="helper_tap_zone">أفلتها على مربع داخل منطقة الوضع الخاصة بـ%1$s.</string>
+
+    <string name="banner_select_piece_first">اختر قطعة أولًا.</string>
+    <string name="banner_illegal_destination">هذه الوجهة غير قانونية للقطعة المختارة.</string>
+    <string name="ai_no_placement">لم يجد الذكاء الاصطناعي موضعًا قانونيًا.</string>
+    <string name="ai_no_move">لم يجد الذكاء الاصطناعي نقلة قانونية.</string>
+
+    <string name="status_to_move">الدور على %1$s.</string>
+    <string name="status_check">%1$s تحت كش.</string>
+    <string name="status_checkmate">%1$s حقق كش ملك.</string>
+    <string name="status_king_captured">%1$s أسَر الملك.</string>
+    <string name="status_draw">تعادل: %1$s.</string>
+    <string name="outcome_checkmate">%1$s يفوز بكش ملك.</string>
+    <string name="outcome_king_captured">%1$s يفوز بأسر الملك.</string>
+    <string name="draw_stalemate">تعادل بالجمود</string>
+    <string name="draw_insufficient_material">عدم كفاية القطع</string>
+
+    <string name="error_negative_piece_count">لا يمكن أن يكون عدد %1$s سالبًا (%2$d).</string>
+    <string name="error_piece_count_mismatch">كان المتوقع %1$d قطعة بالضبط لكن وردت %2$d.</string>
+    <string name="error_king_count_mismatch">كان المتوقع %1$d ملك بالضبط لكن ورد %2$d.</string>
+    <string name="error_budget_exceeded">يكلّف الجيش %1$d نقطة، وهو يتجاوز ميزانية %2$d نقطة.</string>
+    <string name="error_piece_limit_reached">يضم الجيش بالفعل %1$d قطعة.</string>
+    <string name="error_king_already_selected">يُسمح بملك واحد فقط.</string>
+    <string name="error_purchase_over_budget">يتجاوز هذا الشراء الميزانية بمقدار %1$d نقطة؛ وستحتاج %2$d أماكن إلى %3$d نقطة على الأقل.</string>
+    <string name="error_cannot_complete_army">سيترك هذا الشراء %1$d أماكن مقابل %2$d نقطة فقط؛ ويلزم %3$d نقطة على الأقل لإكمال الجيش.</string>
+    <string name="error_wrong_placement_turn">الدور على %1$s للوضع، وليس %2$s.</string>
+    <string name="error_piece_not_available">لم يتبقَّ لدى %1$s أي %2$s للوضع.</string>
+    <string name="error_square_occupied">المربع %1$s مشغول بالفعل.</string>
+    <string name="error_outside_zone">المربع %1$s خارج منطقة الوضع الخاصة بـ%2$s (الصفوف %3$d–%4$d).</string>
+    <string name="error_duplicate_draft">قدّم %1$s جيشًا بالفعل.</string>
+    <string name="error_wrong_phase">هذا الإجراء غير متاح حاليًا.</string>
+    <string name="error_no_piece_at_source">لا توجد قطعة على %1$s.</string>
+    <string name="error_wrong_color_turn">الدور على %1$s، وليس %2$s.</string>
+    <string name="error_illegal_move">النقلة %1$s–%2$s غير قانونية.</string>
+    <string name="error_unknown">حدث خطأ ما.</string>
+    <plurals name="draft_points_left">
+        <item quantity="zero">لم تتبقَّ نقاط</item>
+        <item quantity="one">تبقّت نقطة واحدة</item>
+        <item quantity="two">تبقّت نقطتان</item>
+        <item quantity="few">تبقّت %1$d نقاط</item>
+        <item quantity="many">تبقّت %1$d نقطة</item>
+        <item quantity="other">تبقّت %1$d نقطة</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="zero">لم تتبقَّ أماكن</item>
+        <item quantity="one">تبقّى مكان واحد</item>
+        <item quantity="two">تبقّى مكانان</item>
+        <item quantity="few">تبقّت %1$d أماكن</item>
+        <item quantity="many">تبقّى %1$d مكانًا</item>
+        <item quantity="other">تبقّى %1$d مكان</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">كش!</string>
+    <string name="game_check_body">%1$s تحت الكش - انقل الملك إلى مربع آمن.</string>
+    <string name="game_checkmate_title">كش مات!</string>
+    <string name="game_checkmate_body">%1$s تعرض لكش مات. انتهت المباراة.</string>
+    <string name="game_over_title">انتهت المباراة</string>
+    <string name="action_new_game">مباراة جديدة</string>
+    <string name="action_home">الرئيسية</string>
+    <string name="action_leave">مغادرة المباراة</string>
+    <string name="action_cancel">إلغاء</string>
+    <string name="dialog_leave_title">هل تريد مغادرة هذه المباراة؟</string>
+    <string name="dialog_leave_body">سيتم فقدان تشكيلتك ونقلاتك الحالية.</string>
+    <string name="cd_back">رجوع</string>
+    <string name="cd_app_logo">شعار ChessPoints</string>
+</resources>

@@ -1,4 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ChessPoints</string>
+    <!-- Default (English) catalogue. Every other values-xx/strings.xml mirrors these keys;
+         anything missing there falls back to this file automatically. -->
+    <string name="app_name" translatable="false">ChessPoints</string>
+
+    <!-- Screen titles -->
+    <string name="title_home">Choose a mode</string>
+    <string name="title_build_and_place">Build and place</string>
+    <string name="title_place_pieces">Place your pieces</string>
+    <string name="title_play_match">Play the match</string>
+
+    <!-- Home -->
+    <string name="home_hero_title">Buy your army.\nBuild the board. Then play.</string>
+    <string name="home_hero_body">Start with a %1$d-point budget, draft %2$d pieces, place them on your side, and let the game begin.</string>
+    <string name="home_section_mode">Choose a mode</string>
+    <string name="home_mode_two_player_title">2 Player</string>
+    <string name="home_mode_two_player_subtitle">Pass-and-play on one device for drafting, placement, and the match.</string>
+    <string name="home_mode_ai_title">vs AI</string>
+    <string name="home_mode_ai_subtitle">Let the built-in opponent draft, place, and play against you.</string>
+    <string name="home_start_button">Buy and place pieces</string>
+    <string name="home_point_chip" translatable="false">%1$s %2$d</string>
+
+    <!-- Buy and placement -->
+    <string name="phase_step_setup">Setup · Buy and place</string>
+    <string name="phase_step_place">Step 2 · Place</string>
+    <string name="badge_vs_ai">vs AI</string>
+    <string name="placement_header_build">%1$s builds an army</string>
+    <string name="placement_header_place">%1$s places next</string>
+    <string name="placement_zone_hint">Allowed ranks %1$d–%2$d</string>
+    <string name="placement_section_unplaced">Unplaced pieces</string>
+    <string name="draft_section_drag">Drag a piece to a legal square</string>
+    <string name="draft_drop_hint">Each drop buys and places exactly one piece. The shop count updates only after a legal drop.</string>
+    <string name="draft_auto_finish">Setup finishes automatically after the final drop.</string>
+    <string name="draft_metric_budget">Budget</string>
+    <string name="draft_metric_army">Army</string>
+    <string name="draft_metric_value" translatable="false">%1$d / %2$d</string>
+    <string name="draft_king_free">Free and mandatory</string>
+    <string name="cd_drag_piece">Drag %1$s onto the board</string>
+    <string name="shop_piece_cost">%1$d pts</string>
+    <string name="piece_count_short" translatable="false">×%1$d</string>
+
+    <!-- Match -->
+    <string name="game_turn_title">%1$s to move</string>
+    <string name="game_badge_waiting">Waiting</string>
+    <string name="game_captured_by_white">Captured by White</string>
+    <string name="game_captured_by_black">Captured by Black</string>
+    <string name="game_captured_points">%1$d pts</string>
+    <string name="game_no_captures">No captures yet.</string>
+    <string name="promotion_title">Choose promotion</string>
+    <string name="promotion_body">Your pawn reached the far rank.</string>
+
+    <!-- Pieces and sides -->
+    <string name="piece_pawn">Pawn</string>
+    <string name="piece_knight">Knight</string>
+    <string name="piece_bishop">Bishop</string>
+    <string name="piece_rook">Rook</string>
+    <string name="piece_queen">Queen</string>
+    <string name="piece_king">King</string>
+    <string name="color_white">White</string>
+    <string name="color_black">Black</string>
+    <string name="label_you">You</string>
+    <string name="label_ai">AI</string>
+    <string name="cd_chess_piece">%1$s %2$s chess piece</string>
+
+    <!-- Guidance -->
+    <string name="helper_waiting_ai_army">Waiting for the AI army.</string>
+    <string name="helper_ai_preparing_army">The AI is preparing its army.</string>
+    <string name="helper_build_army">Build a %1$d-piece army with one mandatory king.</string>
+    <string name="helper_waiting_ai_placement">Waiting for the AI placement move.</string>
+    <string name="helper_ai_choosing_placement">The AI is choosing a placement.</string>
+    <string name="helper_pick_piece">Drag a piece from the shop onto a highlighted square.</string>
+    <string name="helper_tap_zone">Release on a square inside the placement zone for %1$s.</string>
+
+    <!-- Banners -->
+    <string name="banner_select_piece_first">Select a piece first.</string>
+    <string name="banner_illegal_destination">That destination is not legal for the selected piece.</string>
+    <string name="ai_no_placement">The AI could not find a legal placement.</string>
+    <string name="ai_no_move">The AI could not find a legal move.</string>
+
+    <!-- Status and outcome -->
+    <string name="status_to_move">%1$s to move.</string>
+    <string name="status_check">%1$s is in check.</string>
+    <string name="status_checkmate">%1$s delivered checkmate.</string>
+    <string name="status_king_captured">%1$s captured the king.</string>
+    <string name="status_draw">Draw: %1$s.</string>
+    <string name="outcome_checkmate">%1$s wins by checkmate.</string>
+    <string name="outcome_king_captured">%1$s wins by capturing the king.</string>
+    <string name="draw_stalemate">stalemate</string>
+    <string name="draw_insufficient_material">insufficient material</string>
+
+    <!-- Rules feedback (localised presentation of engine results) -->
+    <string name="error_negative_piece_count">The %1$s count cannot be negative (%2$d).</string>
+    <string name="error_piece_count_mismatch">Expected exactly %1$d pieces but received %2$d.</string>
+    <string name="error_king_count_mismatch">Expected exactly %1$d king but received %2$d.</string>
+    <string name="error_budget_exceeded">The army costs %1$d points, which exceeds the %2$d point budget.</string>
+    <string name="error_piece_limit_reached">The army already has %1$d pieces.</string>
+    <string name="error_king_already_selected">Only one king is allowed.</string>
+    <string name="error_purchase_over_budget">This purchase exceeds the budget by %1$d points; %2$d slots would still need at least %3$d points.</string>
+    <string name="error_cannot_complete_army">This purchase would leave %1$d slots but only %2$d points; at least %3$d points are needed to complete the army.</string>
+    <string name="error_wrong_placement_turn">%1$s places next, not %2$s.</string>
+    <string name="error_piece_not_available">%1$s has no remaining %2$s to place.</string>
+    <string name="error_square_occupied">Square %1$s is already occupied.</string>
+    <string name="error_outside_zone">Square %1$s is outside the placement zone for %2$s (ranks %3$d–%4$d).</string>
+    <string name="error_duplicate_draft">%1$s has already submitted an army.</string>
+    <string name="error_wrong_phase">That action is not available right now.</string>
+    <string name="error_no_piece_at_source">No piece found on %1$s.</string>
+    <string name="error_wrong_color_turn">It is %1$s\'s turn to move, not %2$s.</string>
+    <string name="error_illegal_move">The move %1$s–%2$s is not legal.</string>
+    <string name="error_unknown">Something went wrong.</string>
+    <plurals name="draft_points_left">
+        <item quantity="one">%1$d point left</item>
+        <item quantity="other">%1$d points left</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="one">%1$d slot left</item>
+        <item quantity="other">%1$d slots left</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">Check!</string>
+    <string name="game_check_body">%1$s is in check - move the king to safety.</string>
+    <string name="game_checkmate_title">Checkmate!</string>
+    <string name="game_checkmate_body">%1$s is checkmated. The match is over.</string>
+    <string name="game_over_title">Game over</string>
+    <string name="action_new_game">New game</string>
+    <string name="action_home">Home</string>
+    <string name="action_leave">Leave match</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="dialog_leave_title">Leave this match?</string>
+    <string name="dialog_leave_body">Your current setup and moves will be lost.</string>
+    <string name="cd_back">Back</string>
+    <string name="cd_app_logo">ChessPoints logo</string>
 </resources>

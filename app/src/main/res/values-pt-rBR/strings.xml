@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Escolha um modo</string>
+    <string name="title_build_and_place">Comprar e posicionar</string>
+    <string name="title_place_pieces">Posicione suas peças</string>
+    <string name="title_play_match">Jogar a partida</string>
+
+    <string name="home_hero_title">Compre seu exército.\nMonte o tabuleiro. Depois jogue.</string>
+    <string name="home_hero_body">Comece com um orçamento de %1$d pontos, recrute %2$d peças, posicione-as do seu lado e que comece o jogo.</string>
+    <string name="home_section_mode">Escolha um modo</string>
+    <string name="home_mode_two_player_title">2 jogadores</string>
+    <string name="home_mode_two_player_subtitle">Alternem no mesmo aparelho para comprar, posicionar e jogar.</string>
+    <string name="home_mode_ai_title">Contra a IA</string>
+    <string name="home_mode_ai_subtitle">O oponente integrado compra, posiciona e joga contra você.</string>
+    <string name="home_start_button">Comprar e posicionar peças</string>
+
+    <string name="phase_step_setup">Preparação · Comprar e posicionar</string>
+    <string name="phase_step_place">Etapa 2 · Posicionar</string>
+    <string name="badge_vs_ai">Contra a IA</string>
+    <string name="placement_header_build">%1$s monta um exército</string>
+    <string name="placement_header_place">É a vez de %1$s posicionar</string>
+    <string name="placement_zone_hint">Fileiras permitidas %1$d–%2$d</string>
+    <string name="placement_section_unplaced">Peças não posicionadas</string>
+    <string name="draft_section_drag">Arraste uma peça para uma casa válida</string>
+    <string name="draft_drop_hint">Cada soltura compra e posiciona exatamente uma peça. O contador da loja muda só após uma soltura válida.</string>
+    <string name="draft_auto_finish">A preparação termina automaticamente após a última peça.</string>
+    <string name="draft_metric_budget">Orçamento</string>
+    <string name="draft_metric_army">Exército</string>
+    <string name="draft_king_free">Grátis e obrigatório</string>
+    <string name="cd_drag_piece">Arraste %1$s para o tabuleiro</string>
+    <string name="shop_piece_cost">%1$d pts</string>
+
+    <string name="game_turn_title">Vez das %1$s</string>
+    <string name="game_badge_waiting">Aguardando</string>
+    <string name="game_captured_by_white">Capturadas pelas brancas</string>
+    <string name="game_captured_by_black">Capturadas pelas pretas</string>
+    <string name="game_captured_points">%1$d pts</string>
+    <string name="game_no_captures">Ainda não há capturas.</string>
+    <string name="promotion_title">Escolha a promoção</string>
+    <string name="promotion_body">Seu peão chegou à última fileira.</string>
+
+    <string name="piece_pawn">Peão</string>
+    <string name="piece_knight">Cavalo</string>
+    <string name="piece_bishop">Bispo</string>
+    <string name="piece_rook">Torre</string>
+    <string name="piece_queen">Dama</string>
+    <string name="piece_king">Rei</string>
+    <string name="color_white">Brancas</string>
+    <string name="color_black">Pretas</string>
+    <string name="label_you">Você</string>
+    <string name="label_ai">IA</string>
+    <string name="cd_chess_piece">Peça de xadrez: %1$s %2$s</string>
+
+    <string name="helper_waiting_ai_army">Aguardando o exército da IA.</string>
+    <string name="helper_ai_preparing_army">A IA está preparando seu exército.</string>
+    <string name="helper_build_army">Monte um exército de %1$d peças com um rei obrigatório.</string>
+    <string name="helper_waiting_ai_placement">Aguardando o posicionamento da IA.</string>
+    <string name="helper_ai_choosing_placement">A IA está escolhendo um posicionamento.</string>
+    <string name="helper_pick_piece">Arraste uma peça da loja até uma casa destacada.</string>
+    <string name="helper_tap_zone">Solte em uma casa dentro da zona de posicionamento de %1$s.</string>
+
+    <string name="banner_select_piece_first">Selecione uma peça primeiro.</string>
+    <string name="banner_illegal_destination">Esse destino não é legal para a peça selecionada.</string>
+    <string name="ai_no_placement">A IA não encontrou um posicionamento legal.</string>
+    <string name="ai_no_move">A IA não encontrou um lance legal.</string>
+
+    <string name="status_to_move">Vez das %1$s.</string>
+    <string name="status_check">As %1$s estão em xeque.</string>
+    <string name="status_checkmate">As %1$s deram xeque-mate.</string>
+    <string name="status_king_captured">As %1$s capturaram o rei.</string>
+    <string name="status_draw">Empate: %1$s.</string>
+    <string name="outcome_checkmate">As %1$s vencem por xeque-mate.</string>
+    <string name="outcome_king_captured">As %1$s vencem capturando o rei.</string>
+    <string name="draw_stalemate">afogamento</string>
+    <string name="draw_insufficient_material">material insuficiente</string>
+
+    <string name="error_negative_piece_count">A quantidade de %1$s não pode ser negativa (%2$d).</string>
+    <string name="error_piece_count_mismatch">Eram esperadas exatamente %1$d peças, mas foram recebidas %2$d.</string>
+    <string name="error_king_count_mismatch">Era esperado exatamente %1$d rei, mas foram recebidos %2$d.</string>
+    <string name="error_budget_exceeded">O exército custa %1$d pontos e excede o orçamento de %2$d pontos.</string>
+    <string name="error_piece_limit_reached">O exército já tem %1$d peças.</string>
+    <string name="error_king_already_selected">Somente um rei é permitido.</string>
+    <string name="error_purchase_over_budget">Esta compra excede o orçamento em %1$d pontos; %2$d vagas ainda exigiriam pelo menos %3$d pontos.</string>
+    <string name="error_cannot_complete_army">Esta compra deixaria %1$d vagas com apenas %2$d pontos; são necessários pelo menos %3$d pontos para completar o exército.</string>
+    <string name="error_wrong_placement_turn">É a vez de %1$s posicionar, não de %2$s.</string>
+    <string name="error_piece_not_available">%1$s não tem mais %2$s para posicionar.</string>
+    <string name="error_square_occupied">A casa %1$s já está ocupada.</string>
+    <string name="error_outside_zone">A casa %1$s está fora da zona de posicionamento de %2$s (fileiras %3$d–%4$d).</string>
+    <string name="error_duplicate_draft">%1$s já enviou um exército.</string>
+    <string name="error_wrong_phase">Essa ação não está disponível agora.</string>
+    <string name="error_no_piece_at_source">Nenhuma peça encontrada em %1$s.</string>
+    <string name="error_wrong_color_turn">É a vez de %1$s jogar, não de %2$s.</string>
+    <string name="error_illegal_move">O lance %1$s–%2$s não é legal.</string>
+    <string name="error_unknown">Algo deu errado.</string>
+    <plurals name="draft_points_left">
+        <item quantity="one">Resta %1$d ponto</item>
+        <item quantity="many">Restam %1$d pontos</item>
+        <item quantity="other">Restam %1$d pontos</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="one">Resta %1$d vaga</item>
+        <item quantity="many">Restam %1$d vagas</item>
+        <item quantity="other">Restam %1$d vagas</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">Xeque!</string>
+    <string name="game_check_body">%1$s está em xeque - leve o rei para um lugar seguro.</string>
+    <string name="game_checkmate_title">Xeque-mate!</string>
+    <string name="game_checkmate_body">%1$s levou xeque-mate. A partida acabou.</string>
+    <string name="game_over_title">Fim de partida</string>
+    <string name="action_new_game">Novo jogo</string>
+    <string name="action_home">Início</string>
+    <string name="action_leave">Sair da partida</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="dialog_leave_title">Sair desta partida?</string>
+    <string name="dialog_leave_body">Sua formação e suas jogadas atuais serão perdidas.</string>
+    <string name="cd_back">Voltar</string>
+    <string name="cd_app_logo">Logotipo do ChessPoints</string>
+</resources>

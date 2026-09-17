@@ -7,6 +7,7 @@ data class GameRules(
 
 sealed interface GameOutcome {
     data class Checkmate(val winner: Color) : GameOutcome
+    data class KingCaptured(val winner: Color) : GameOutcome
     data class Draw(val reason: DrawReason) : GameOutcome
 }
 
@@ -74,6 +75,31 @@ sealed interface GamePlacementResult {
     data class Rejected(val reason: GamePlacementError) : GamePlacementResult
 }
 
+sealed interface SetupError {
+    val message: String
+
+    data class WrongTurn(val expected: Color, val actual: Color) : SetupError {
+        override val message: String = "It is $expected's setup turn, not $actual's"
+    }
+
+    data class InvalidPurchase(val reason: DraftPurchaseValidation.Rejected) : SetupError {
+        override val message: String = reason.message
+    }
+
+    data class InvalidSquare(val error: PlacementError) : SetupError {
+        override val message: String = error.message
+    }
+
+    data class WrongPhase(val phase: String) : SetupError {
+        override val message: String = "Cannot buy and place pieces during $phase"
+    }
+}
+
+sealed interface SetupResult {
+    data class Accepted(val gameState: ChessGameState) : SetupResult
+    data class Rejected(val reason: SetupError) : SetupResult
+}
+
 sealed interface GameMoveError {
     val message: String
 
@@ -99,7 +125,10 @@ class ChessGame(
     private val rules: GameRules = GameRules(),
 ) {
     private val drafts = mutableMapOf<Color, Roster>()
+    private val setupCounts = Color.entries.associateWith { mutableMapOf<PieceType, Int>() }.toMutableMap()
     private val placementValidator = PlacementValidator(rules.placementRules)
+    private var setupBoard: Board = Board.empty()
+    private var setupSideToPlace: Color = rules.placementRules.firstPlayer
 
     private var placementState: PlacementState? = null
     private var position: GamePosition? = null
@@ -112,6 +141,7 @@ class ChessGame(
         if (placementState != null || position != null || outcome != null) {
             return DraftSubmissionResult.Rejected(DraftSubmissionError.WrongPhase(currentPhaseName()))
         }
+
         if (drafts.containsKey(color)) {
             return DraftSubmissionResult.Rejected(DraftSubmissionError.DuplicateSubmission(color))
         }
@@ -133,6 +163,64 @@ class ChessGame(
             }
         }
     }
+
+    /**
+     * Atomically purchases one piece and places it on the current side's legal square.
+     */
+    fun buyAndPlacePiece(
+        color: Color,
+        pieceType: PieceType,
+        square: Square,
+    ): SetupResult {
+        if (placementState != null || position != null || outcome != null) {
+            return SetupResult.Rejected(SetupError.WrongPhase(currentPhaseName()))
+        }
+        if (color != setupSideToPlace) {
+            return SetupResult.Rejected(SetupError.WrongTurn(setupSideToPlace, color))
+        }
+
+        val counts = setupCounts.getValue(color)
+        val purchase = DraftValidator.validateAddition(counts, pieceType, rules.draftRules)
+        if (purchase is DraftPurchaseValidation.Rejected) {
+            return SetupResult.Rejected(SetupError.InvalidPurchase(purchase))
+        }
+        if (!setupBoard.isEmpty(square)) {
+            return SetupResult.Rejected(SetupError.InvalidSquare(PlacementError.OccupiedSquare(square)))
+        }
+        val zone = rules.placementRules.zoneFor(color)
+        if (!zone.contains(square)) {
+            return SetupResult.Rejected(
+                SetupError.InvalidSquare(PlacementError.OutsidePlacementZone(color, square, zone.ranks)),
+            )
+        }
+
+        counts[pieceType] = counts.getOrDefault(pieceType, 0) + 1
+        setupBoard = setupBoard.place(square, Piece(pieceType, color))
+        setupSideToPlace = color.opposite()
+
+        if (counts.values.sum() == rules.draftRules.requiredPieceCount) {
+            drafts[color] = Roster(color, counts)
+        }
+        if (Color.entries.all { drafts.containsKey(it) }) {
+            enterPlay(
+                PlacementState(
+                    board = setupBoard,
+                    rosters = drafts.toMap(),
+                    remainingByColor = Color.entries.associateWith { emptyMap() },
+                    sideToPlace = setupSideToPlace,
+                    rules = rules.placementRules,
+                ),
+            )
+        }
+        return SetupResult.Accepted(getGameState())
+    }
+
+    fun getSetupBoard(): Board = setupBoard
+
+    fun getSetupSideToPlace(): Color = setupSideToPlace
+
+    fun getSetupCounts(color: Color): Map<PieceType, Int> =
+        PieceType.entries.associateWith { setupCounts.getValue(color).getOrDefault(it, 0) }
 
     fun placePiece(
         color: Color,
@@ -204,6 +292,7 @@ class ChessGame(
     private fun updateOutcome(status: PositionStatus) {
         outcome = when (status) {
             is PositionStatus.Checkmate -> GameOutcome.Checkmate(status.winner)
+            is PositionStatus.KingCaptured -> GameOutcome.KingCaptured(status.winner)
             is PositionStatus.Draw -> GameOutcome.Draw(status.reason)
             PositionStatus.Active,
             is PositionStatus.Check,

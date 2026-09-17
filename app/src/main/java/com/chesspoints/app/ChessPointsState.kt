@@ -10,6 +10,8 @@ import androidx.compose.runtime.setValue
 import com.chesspoints.ai.AiDrafter
 import com.chesspoints.ai.AiMoveEngine
 import com.chesspoints.ai.AiPlacer
+import com.chesspoints.app.i18n.UiText
+import com.chesspoints.app.i18n.displayText
 import com.chesspoints.engine.Board
 import com.chesspoints.engine.ChessGame
 import com.chesspoints.engine.ChessGameState
@@ -17,6 +19,7 @@ import com.chesspoints.engine.Color
 import com.chesspoints.engine.DraftRules
 import com.chesspoints.engine.DraftValidationResult
 import com.chesspoints.engine.DraftValidator
+import com.chesspoints.engine.DraftPurchaseValidation
 import com.chesspoints.engine.GameOutcome
 import com.chesspoints.engine.GamePlacementResult
 import com.chesspoints.engine.GamePosition
@@ -26,6 +29,7 @@ import com.chesspoints.engine.MoveRequest
 import com.chesspoints.engine.Piece
 import com.chesspoints.engine.PieceType
 import com.chesspoints.engine.PlacementState
+import com.chesspoints.engine.PlacementRules
 import com.chesspoints.engine.PlacementZone
 import com.chesspoints.engine.PositionStatus
 import com.chesspoints.engine.Square
@@ -47,7 +51,6 @@ enum class GameMode {
 
 enum class AppScreen {
     Home,
-    Draft,
     Placement,
     Game,
 }
@@ -64,7 +67,7 @@ data class PlacementChoice(
 
 sealed interface AiStepResult<out T> {
     data class Success<T>(val value: T) : AiStepResult<T>
-    data class Unavailable(val message: String) : AiStepResult<Nothing>
+    data class Unavailable(val message: UiText) : AiStepResult<Nothing>
 }
 
 interface AiOpponentGateway {
@@ -78,6 +81,15 @@ interface AiOpponentGateway {
         color: Color,
     ): AiStepResult<PlacementChoice>
 
+    fun chooseSetupPlacement(
+        color: Color,
+        remainingPieces: Map<PieceType, Int>,
+        board: Board,
+        rules: PlacementRules,
+        purchasedCounts: Map<PieceType, Int>,
+        draftRules: DraftRules,
+    ): AiStepResult<PlacementChoice>
+
     fun chooseMove(position: GamePosition): AiStepResult<MoveRequest>
 }
 
@@ -86,8 +98,8 @@ private class EngineBackedAiOpponentGateway(
     private val placer: AiPlacer = AiPlacer(),
     private val moveEngine: AiMoveEngine = AiMoveEngine(),
 ) : AiOpponentGateway {
-    private val noPlacementMessage = "The AI could not find a legal placement."
-    private val noMoveMessage = "The AI could not find a legal move."
+    private val noPlacementMessage = UiText.Res(R.string.ai_no_placement)
+    private val noMoveMessage = UiText.Res(R.string.ai_no_move)
 
     override fun buildDraft(
         draftState: ChessGameState.Drafting,
@@ -117,6 +129,25 @@ private class EngineBackedAiOpponentGateway(
         )
     }
 
+    override fun chooseSetupPlacement(
+        color: Color,
+        remainingPieces: Map<PieceType, Int>,
+        board: Board,
+        rules: PlacementRules,
+        purchasedCounts: Map<PieceType, Int>,
+        draftRules: DraftRules,
+    ): AiStepResult<PlacementChoice> {
+        val choice = placer.nextSetupPlacement(
+            color = color,
+            remainingPieces = remainingPieces,
+            board = board,
+            rules = rules,
+            purchasedCounts = purchasedCounts,
+            draftRules = draftRules,
+        ) ?: return AiStepResult.Unavailable(noPlacementMessage)
+        return AiStepResult.Success(PlacementChoice(choice.pieceType, choice.square))
+    }
+
     override fun chooseMove(position: GamePosition): AiStepResult<MoveRequest> {
         val move = moveEngine.chooseMove(position).move ?: return AiStepResult.Unavailable(noMoveMessage)
         return AiStepResult.Success(
@@ -140,13 +171,16 @@ class ChessPointsState(
     var currentScreen by mutableStateOf(AppScreen.Home)
         private set
 
-    var bannerMessage by mutableStateOf<String?>(null)
+    var bannerMessage by mutableStateOf<UiText?>(null)
         private set
 
     var gameState by mutableStateOf<ChessGameState>(ChessGame().getGameState())
         private set
 
     var draftPieceCounts by mutableStateOf(defaultDraftCounts())
+        private set
+
+    var draftPlacementBoard by mutableStateOf(Board.empty())
         private set
 
     var currentDraftColor by mutableStateOf(Color.WHITE)
@@ -167,9 +201,11 @@ class ChessPointsState(
     private var awaitingAiDraft by mutableStateOf(false)
     private var awaitingAiPlacement by mutableStateOf(false)
     private var awaitingAiMove by mutableStateOf(false)
+    private var aiSetupCounts: Map<PieceType, Int>? = null
 
     private var game = ChessGame()
     private var gameSessionId = 0
+    private val draftPlacements = mutableMapOf<Color, MutableList<PlacementChoice>>()
 
     val draftRules: DraftRules
         get() = when (val state = gameState) {
@@ -178,28 +214,34 @@ class ChessPointsState(
         }
 
     val draftValidation: DraftValidationResult
-        get() = DraftValidator.validate(currentDraftColor, draftPieceCounts, draftRules)
+        get() = DraftValidator.validate(currentDraftColor, game.getSetupCounts(currentDraftColor), draftRules)
 
     val isDraftEditable: Boolean
         get() = !awaitingAiDraft && !(gameMode == GameMode.VersusAi && currentDraftColor == Color.BLACK)
 
-    val draftHelperMessage: String
+    val draftHelperMessage: UiText
         get() = when {
-            awaitingAiDraft -> "Waiting for the AI roster."
+            awaitingAiDraft -> UiText.Res(R.string.helper_waiting_ai_army)
+            awaitingAiPlacement -> UiText.Res(R.string.helper_waiting_ai_placement)
             gameMode == GameMode.VersusAi && currentDraftColor == Color.BLACK ->
-                "The AI is drafting its roster."
+                UiText.Res(R.string.helper_ai_preparing_army)
 
-            else -> "Build a 16-piece army with one mandatory king."
+            else -> UiText.of(R.string.helper_build_army, draftRules.requiredPieceCount)
         }
 
-    val placementSideToPlace: Color
-        get() = (gameState as? ChessGameState.Placing)?.placementState?.sideToPlace ?: Color.WHITE
+    val isDrafting: Boolean
+        get() = gameState is ChessGameState.Drafting
 
-    val placementSideToPlaceLabel: String
+    val placementSideToPlace: Color
+        get() = (gameState as? ChessGameState.Placing)?.placementState?.sideToPlace
+            ?: currentDraftColor
+
+    val placementSideToPlaceLabel: UiText
         get() = colorLabel(placementSideToPlace)
 
     val placementZone: PlacementZone?
         get() = (gameState as? ChessGameState.Placing)?.placementState?.rules?.zoneFor(placementSideToPlace)
+            ?: if (isDrafting) GameRules().placementRules.zoneFor(currentDraftColor) else null
 
     val remainingPlacementPieces: Map<PieceType, Int>
         get() = (gameState as? ChessGameState.Placing)?.placementState?.remainingPieces(placementSideToPlace).orEmpty()
@@ -207,12 +249,12 @@ class ChessPointsState(
     val isPlacementInteractive: Boolean
         get() = !awaitingAiPlacement && !isAiColor(placementSideToPlace)
 
-    val placementHelperMessage: String
+    val placementHelperMessage: UiText
         get() = when {
-            awaitingAiPlacement -> "Waiting for the AI placement move."
-            isAiColor(placementSideToPlace) -> "The AI is choosing a placement."
-            selectedPlacementPieceType == null -> "Pick a piece from the tray, then tap a highlighted square."
-            else -> "Tap a square inside ${colorLabel(placementSideToPlace)}'s placement zone."
+            awaitingAiPlacement -> UiText.Res(R.string.helper_waiting_ai_placement)
+            isAiColor(placementSideToPlace) -> UiText.Res(R.string.helper_ai_choosing_placement)
+            selectedPlacementPieceType == null -> UiText.Res(R.string.helper_pick_piece)
+            else -> UiText.of(R.string.helper_tap_zone, colorLabel(placementSideToPlace))
         }
 
     val playSideToMove: Color
@@ -222,17 +264,17 @@ class ChessPointsState(
             else -> Color.WHITE
         }
 
-    val playSideToMoveLabel: String
+    val playSideToMoveLabel: UiText
         get() = colorLabel(playSideToMove)
 
     val isGameInteractive: Boolean
         get() = gameState is ChessGameState.Playing && !awaitingAiMove && !isAiColor(playSideToMove)
 
-    val gameStatusMessage: String
+    val gameStatusMessage: UiText
         get() = when (val state = gameState) {
             is ChessGameState.Playing -> describePlayingStatus(state.status)
             is ChessGameState.GameOver -> describeGameOver(state.outcome)
-            else -> ""
+            else -> UiText.Raw("")
         }
 
     val currentBoard: Board
@@ -240,18 +282,23 @@ class ChessPointsState(
             is ChessGameState.Placing -> state.placementState.board
             is ChessGameState.Playing -> state.position.board
             is ChessGameState.GameOver -> state.position.board
-            is ChessGameState.Drafting -> Board.empty()
+            is ChessGameState.Drafting -> game.getSetupBoard()
         }
 
-    val currentDraftColorLabel: String
+    val currentDraftColorLabel: UiText
         get() = colorLabel(currentDraftColor)
 
-    val screenTitle: String
+    val screenTitle: UiText
         get() = when (currentScreen) {
-            AppScreen.Home -> "Choose a mode"
-            AppScreen.Draft -> "Draft your armies"
-            AppScreen.Placement -> "Place your pieces"
-            AppScreen.Game -> "Play the match"
+            AppScreen.Home -> UiText.Res(R.string.title_home)
+            AppScreen.Placement ->
+                if (isDrafting) {
+                    UiText.Res(R.string.title_build_and_place)
+                } else {
+                    UiText.Res(R.string.title_place_pieces)
+                }
+
+            AppScreen.Game -> UiText.Res(R.string.title_play_match)
         }
 
     fun selectMode(mode: GameMode) {
@@ -264,6 +311,8 @@ class ChessPointsState(
         gameState = game.getGameState()
         currentDraftColor = Color.WHITE
         draftPieceCounts = defaultDraftCounts()
+        draftPlacementBoard = Board.empty()
+        draftPlacements.clear()
         selectedPlacementPieceType = null
         selectedMoveSquare = null
         selectedLegalMoves = emptyList()
@@ -271,40 +320,111 @@ class ChessPointsState(
         awaitingAiDraft = false
         awaitingAiPlacement = false
         awaitingAiMove = false
+        aiSetupCounts = null
         bannerMessage = null
-        currentScreen = AppScreen.Draft
+        currentScreen = AppScreen.Placement
+        requestAiSetupPlacementIfNeeded()
     }
 
+    /**
+     * Leaves the current match and returns to the home screen. The session id is bumped so any
+     * in-flight AI step is ignored when it completes.
+     */
+    fun navigateHome() {
+        gameSessionId += 1
+        game = ChessGame()
+        gameState = game.getGameState()
+        currentDraftColor = Color.WHITE
+        draftPieceCounts = defaultDraftCounts()
+        draftPlacementBoard = Board.empty()
+        draftPlacements.clear()
+        selectedPlacementPieceType = null
+        selectedMoveSquare = null
+        selectedLegalMoves = emptyList()
+        pendingPromotionMoves = emptyList()
+        awaitingAiDraft = false
+        awaitingAiPlacement = false
+        awaitingAiMove = false
+        aiSetupCounts = null
+        bannerMessage = null
+        currentScreen = AppScreen.Home
+    }
+
+    /** True while a match (setup or play) is running and would be lost by leaving. */
+    val hasMatchInProgress: Boolean
+        get() = currentScreen != AppScreen.Home &&
+            (currentBoard.pieces(Color.WHITE).isNotEmpty() || currentBoard.pieces(Color.BLACK).isNotEmpty())
+
+    /** Square of the king that is currently in check or mated, if any. */
+    val checkedKingSquare: Square?
+        get() {
+            val color = checkedKingColor ?: return null
+            return currentBoard.pieces(color).firstOrNull { it.second.type == PieceType.KING }?.first
+        }
+
+    /** Colour whose king is in check or checkmated, or null when nobody is in check. */
+    val checkedKingColor: Color?
+        get() = when (val state = gameState) {
+            is ChessGameState.Playing -> when (val status = state.status) {
+                is PositionStatus.Check -> status.checkedColor
+                is PositionStatus.Checkmate -> status.winner.opposite()
+                else -> null
+            }
+
+            is ChessGameState.GameOver -> when (val outcome = state.outcome) {
+                is GameOutcome.Checkmate -> outcome.winner.opposite()
+                else -> null
+            }
+
+            else -> null
+        }
+
+    /** True when the check on the board is terminal (checkmate or a captured king). */
+    val isCheckFatal: Boolean
+        get() = when (val state = gameState) {
+            is ChessGameState.Playing -> state.status is PositionStatus.Checkmate
+            is ChessGameState.GameOver -> state.outcome is GameOutcome.Checkmate
+            else -> false
+        }
+
+    /** Localised game-over sentence, or null while the match is still running. */
+    val gameOverMessage: UiText?
+        get() = when (val state = gameState) {
+            is ChessGameState.GameOver -> describeGameOver(state.outcome)
+            is ChessGameState.Playing -> when (val status = state.status) {
+                is PositionStatus.Checkmate -> UiText.of(R.string.outcome_checkmate, colorLabel(status.winner))
+                is PositionStatus.KingCaptured -> UiText.of(R.string.outcome_king_captured, colorLabel(status.winner))
+                is PositionStatus.Draw -> UiText.of(R.string.status_draw, status.reason.displayText())
+                else -> null
+            }
+
+            else -> null
+        }
+
+    /** Public access to the localised side label (handles the You/AI wording in AI mode). */
+    fun colorLabelFor(color: Color): UiText = colorLabel(color)
+
     fun incrementDraftPiece(pieceType: PieceType) {
-        if (!isDraftEditable || pieceType == PieceType.KING) return
-        draftPieceCounts = draftPieceCounts.toMutableMap().apply {
-            this[pieceType] = getValue(pieceType) + 1
-        }.toMap()
+        if (!isDraftEditable) return
+        selectedPlacementPieceType = pieceType
     }
 
     fun decrementDraftPiece(pieceType: PieceType) {
-        if (!isDraftEditable || pieceType == PieceType.KING) return
-        draftPieceCounts = draftPieceCounts.toMutableMap().apply {
-            this[pieceType] = maxOf(0, getValue(pieceType) - 1)
-        }.toMap()
+        // Setup purchases are atomic and cannot be undone after placement.
     }
 
-    fun confirmDraft() {
-        val submission = game.submitDraft(currentDraftColor, draftPieceCounts)
-        when (submission) {
-            is com.chesspoints.engine.DraftSubmissionResult.Accepted -> {
-                refreshGameState()
-                if (gameMode == GameMode.VersusAi && currentDraftColor == Color.WHITE) {
-                    currentDraftColor = Color.BLACK
-                    draftPieceCounts = defaultDraftCounts()
-                    requestAiDraft()
-                } else {
-                    advanceDraftFlow()
-                }
-            }
+    fun canIncrementDraftPiece(pieceType: PieceType): Boolean {
+        return DraftValidator.canAddPiece(game.getSetupCounts(currentDraftColor), pieceType, draftRules)
+    }
 
-            is com.chesspoints.engine.DraftSubmissionResult.Rejected -> bannerMessage = submission.reason.message
-        }
+    fun draftPurchaseWarning(pieceType: PieceType): UiText? =
+        (DraftValidator.validateAddition(game.getSetupCounts(currentDraftColor), pieceType, draftRules) as? com.chesspoints.engine.DraftPurchaseValidation.Rejected)?.displayText()
+
+    fun draftPurchaseValidation(pieceType: PieceType): DraftPurchaseValidation =
+        DraftValidator.validateAddition(game.getSetupCounts(currentDraftColor), pieceType, draftRules)
+
+    fun confirmDraft() {
+        // There is no separate confirmation step in atomic setup.
     }
 
     fun selectPlacementPiece(pieceType: PieceType) {
@@ -312,14 +432,83 @@ class ChessPointsState(
         selectedPlacementPieceType = if (selectedPlacementPieceType == pieceType) null else pieceType
     }
 
+    /**
+     * True when [pieceType] may be dropped on [square] right now. Setup is atomic:
+     * a legal drop both buys and places the piece, so affordability is part of the answer.
+     */
+    fun canPlaceAt(pieceType: PieceType, square: Square): Boolean {
+        if (!isPlacementInteractive) return false
+        if (currentBoard[square] != null) return false
+        if (placementZone?.contains(square) != true) return false
+        return if (isDrafting) {
+            canIncrementDraftPiece(pieceType)
+        } else {
+            remainingPlacementPieces.getOrDefault(pieceType, 0) > 0
+        }
+    }
+
+    /** Squares that would accept [pieceType] right now; used to light up drop targets while dragging. */
+    fun placeableSquares(pieceType: PieceType): Set<Square> {
+        val zone = placementZone ?: return emptySet()
+        if (!isPlacementInteractive) return emptySet()
+        val affordable = if (isDrafting) {
+            canIncrementDraftPiece(pieceType)
+        } else {
+            remainingPlacementPieces.getOrDefault(pieceType, 0) > 0
+        }
+        if (!affordable) return emptySet()
+        val board = currentBoard
+        return buildSet {
+            for (rank in zone.ranks) {
+                for (file in 0..7) {
+                    val square = Square(file, rank)
+                    if (board[square] == null) add(square)
+                }
+            }
+        }
+    }
+
+    /**
+     * Atomic buy-and-place triggered by dropping a piece from the shop onto a square.
+     * Rejections surface as a localised banner from the engine result.
+     */
+    fun dropPieceOn(pieceType: PieceType, square: Square) {
+        if (!isPlacementInteractive) return
+        selectedPlacementPieceType = pieceType
+        placeSelectedPieceAt(square)
+        selectedPlacementPieceType = null
+    }
+
     fun placeSelectedPieceAt(square: Square) {
         val pieceType = selectedPlacementPieceType
-        val placingState = gameState as? ChessGameState.Placing ?: return
         if (!isPlacementInteractive) return
         if (pieceType == null) {
-            bannerMessage = "Select a piece first."
+            bannerMessage = UiText.Res(R.string.banner_select_piece_first)
             return
         }
+
+        if (isDrafting) {
+            when (val result = game.buyAndPlacePiece(currentDraftColor, pieceType, square)) {
+                is com.chesspoints.engine.SetupResult.Accepted -> {
+                    refreshGameState()
+                    currentDraftColor = game.getSetupSideToPlace()
+                    draftPieceCounts = game.getSetupCounts(currentDraftColor)
+                    selectedPlacementPieceType = null
+                    if (gameState is ChessGameState.Playing) {
+                        currentScreen = AppScreen.Game
+                        requestAiMoveIfNeeded()
+                    } else {
+                        requestAiSetupPlacementIfNeeded()
+                    }
+                }
+                is com.chesspoints.engine.SetupResult.Rejected -> {
+                    bannerMessage = result.reason.displayText()
+                }
+            }
+            return
+        }
+
+        val placingState = gameState as? ChessGameState.Placing ?: return
 
         when (val result = game.placePiece(placingState.placementState.sideToPlace, pieceType, square)) {
             is GamePlacementResult.Accepted -> {
@@ -339,7 +528,7 @@ class ChessPointsState(
                 }
             }
 
-            is GamePlacementResult.Rejected -> bannerMessage = result.reason.message
+            is GamePlacementResult.Rejected -> bannerMessage = result.reason.displayText()
         }
     }
 
@@ -369,7 +558,7 @@ class ChessPointsState(
                 if (piece?.color == playingState.position.sideToMove) {
                     selectMoveSquare(square)
                 } else {
-                    bannerMessage = "That destination is not legal for the selected piece."
+                    bannerMessage = UiText.Res(R.string.banner_illegal_destination)
                 }
             }
 
@@ -430,7 +619,7 @@ class ChessPointsState(
                 requestAiMoveIfNeeded()
             }
 
-            is com.chesspoints.engine.GameMoveResult.Rejected -> bannerMessage = result.reason.message
+            is com.chesspoints.engine.GameMoveResult.Rejected -> bannerMessage = result.reason.displayText()
         }
     }
 
@@ -449,6 +638,8 @@ class ChessPointsState(
             is ChessGameState.Drafting -> {
                 currentDraftColor = if (refreshed.submittedRosters.containsKey(Color.WHITE)) Color.BLACK else Color.WHITE
                 draftPieceCounts = defaultDraftCounts()
+                draftPlacementBoard = Board.empty()
+                selectedPlacementPieceType = null
             }
 
             is ChessGameState.Placing -> {
@@ -473,18 +664,82 @@ class ChessPointsState(
             when (result) {
                 is AiStepResult.Success -> {
                     awaitingAiDraft = false
-                    val submission = game.submitDraft(Color.BLACK, result.value)
-                    if (submission is com.chesspoints.engine.DraftSubmissionResult.Rejected) {
-                        bannerMessage = submission.reason.message
-                    }
-                    refreshGameState()
-                    advanceDraftFlow()
+                    aiSetupCounts = result.value
+                    requestAiSetupPlacementIfNeeded()
                 }
 
                 is AiStepResult.Unavailable -> {
                     awaitingAiDraft = false
                     bannerMessage = result.message
                 }
+            }
+        }
+    }
+
+    /**
+     * Drives one AI buy-and-place turn during the atomic setup phase. The AI army is
+     * drafted once per session and then placed one piece per AI turn until it is complete.
+     */
+    private fun requestAiSetupPlacementIfNeeded() {
+        if (!isDrafting) return
+        if (!isAiColor(game.getSetupSideToPlace())) return
+        val aiColor = game.getSetupSideToPlace()
+        val targetCounts = aiSetupCounts
+        if (targetCounts == null) {
+            requestAiDraft()
+            return
+        }
+        val placedCounts = game.getSetupCounts(aiColor)
+        val remaining = PieceType.entries.associateWith { type ->
+            targetCounts.getOrDefault(type, 0) - placedCounts.getOrDefault(type, 0)
+        }
+        if (remaining.values.sum() <= 0) {
+            awaitingAiPlacement = false
+            return
+        }
+        val sessionId = gameSessionId
+        awaitingAiPlacement = true
+        selectedPlacementPieceType = null
+        appScope.launch {
+            val result = withContext(Dispatchers.Default) {
+                aiOpponentGateway.chooseSetupPlacement(
+                    color = aiColor,
+                    remainingPieces = remaining,
+                    board = game.getSetupBoard(),
+                    rules = GameRules().placementRules,
+                    purchasedCounts = placedCounts,
+                    draftRules = draftRules,
+                )
+            }
+            if (sessionId != gameSessionId) return@launch
+            awaitingAiPlacement = false
+            when (result) {
+                is AiStepResult.Success -> {
+                    when (
+                        val setup = game.buyAndPlacePiece(aiColor, result.value.pieceType, result.value.square)
+                    ) {
+                        is com.chesspoints.engine.SetupResult.Accepted -> {
+                            refreshGameState()
+                            currentDraftColor = game.getSetupSideToPlace()
+                            draftPieceCounts = game.getSetupCounts(currentDraftColor)
+                            if (gameState is ChessGameState.Playing) {
+                                currentScreen = AppScreen.Game
+                                requestAiMoveIfNeeded()
+                            } else {
+                                // Setup alternates by piece. Keep driving the loop if the
+                                // engine still reports the AI side, while leaving control
+                                // with the human when the turn has switched.
+                                requestAiSetupPlacementIfNeeded()
+                            }
+                        }
+
+                        is com.chesspoints.engine.SetupResult.Rejected -> {
+                            bannerMessage = setup.reason.displayText()
+                        }
+                    }
+                }
+
+                is AiStepResult.Unavailable -> bannerMessage = result.message
             }
         }
     }
@@ -512,7 +767,7 @@ class ChessPointsState(
                             }
                         }
 
-                        is GamePlacementResult.Rejected -> bannerMessage = placementResult.reason.message
+                        is GamePlacementResult.Rejected -> bannerMessage = placementResult.reason.displayText()
                     }
                 }
 
@@ -553,30 +808,64 @@ class ChessPointsState(
         gameState = game.getGameState()
     }
 
+    private fun replayDraftPlacements() {
+        if (gameState !is ChessGameState.Placing) return
+        val nextIndex = mutableMapOf(Color.WHITE to 0, Color.BLACK to 0)
+        while (true) {
+            val placingState = gameState as? ChessGameState.Placing ?: return
+            val color = placingState.placementState.sideToPlace
+            val choices = draftPlacements[color].orEmpty()
+            val index = nextIndex.getValue(color)
+            val choice = choices.getOrNull(index) ?: return
+            game.placePiece(color, choice.pieceType, choice.square)
+            nextIndex[color] = index + 1
+            refreshGameState()
+        }
+    }
+
     private fun isAiColor(color: Color): Boolean = gameMode == GameMode.VersusAi && color == Color.BLACK
 
-    private fun colorLabel(color: Color): String =
+    private fun colorLabel(color: Color): UiText =
         when {
-            gameMode == GameMode.VersusAi && color == Color.WHITE -> "You"
-            gameMode == GameMode.VersusAi && color == Color.BLACK -> "AI"
-            color == Color.WHITE -> "White"
-            else -> "Black"
+            gameMode == GameMode.VersusAi && color == Color.WHITE -> UiText.Res(R.string.label_you)
+            gameMode == GameMode.VersusAi && color == Color.BLACK -> UiText.Res(R.string.label_ai)
+            color == Color.WHITE -> UiText.Res(R.string.color_white)
+            else -> UiText.Res(R.string.color_black)
         }
 
-    private fun describePlayingStatus(status: PositionStatus): String =
+    private fun describePlayingStatus(status: PositionStatus): UiText =
         when (status) {
-            PositionStatus.Active -> "${colorLabel(playSideToMove)} to move."
-            is PositionStatus.Check -> "${colorLabel(status.checkedColor)} is in check."
-            is PositionStatus.Checkmate -> "${colorLabel(status.winner)} delivered checkmate."
-            is PositionStatus.Draw -> "Draw: ${status.reason.name.lowercase().replace('_', ' ')}."
+            PositionStatus.Active ->
+                UiText.of(R.string.status_to_move, colorLabel(playSideToMove))
+
+            is PositionStatus.Check ->
+                UiText.of(R.string.status_check, colorLabel(status.checkedColor))
+
+            is PositionStatus.Checkmate ->
+                UiText.of(R.string.status_checkmate, colorLabel(status.winner))
+
+            is PositionStatus.KingCaptured ->
+                UiText.of(R.string.status_king_captured, colorLabel(status.winner))
+
+            is PositionStatus.Draw ->
+                UiText.of(R.string.status_draw, status.reason.displayText())
         }
 
-    private fun describeGameOver(outcome: GameOutcome): String =
+    private fun describeGameOver(outcome: GameOutcome): UiText =
         when (outcome) {
-            is GameOutcome.Checkmate -> "${colorLabel(outcome.winner)} wins by checkmate."
-            is GameOutcome.Draw -> "Draw: ${outcome.reason.name.lowercase().replace('_', ' ')}."
+            is GameOutcome.Checkmate ->
+                UiText.of(R.string.outcome_checkmate, colorLabel(outcome.winner))
+
+            is GameOutcome.KingCaptured ->
+                UiText.of(R.string.outcome_king_captured, colorLabel(outcome.winner))
+
+            is GameOutcome.Draw ->
+                UiText.of(R.string.status_draw, outcome.reason.displayText())
         }
 
     private fun defaultDraftCounts(): Map<PieceType, Int> =
-        PieceType.entries.associateWith { if (it == PieceType.KING) 1 else 0 }
+        PieceType.entries.associateWith { 0 }
+
+    private fun getValueOrZero(counts: Map<PieceType, Int>, pieceType: PieceType): Int =
+        counts.getOrDefault(pieceType, 0)
 }

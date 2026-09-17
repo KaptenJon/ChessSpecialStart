@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Elige un modo</string>
+    <string name="title_build_and_place">Compra y coloca</string>
+    <string name="title_place_pieces">Coloca tus piezas</string>
+    <string name="title_play_match">Juega la partida</string>
+
+    <string name="home_hero_title">Compra tu ejército.\nArma el tablero. Y a jugar.</string>
+    <string name="home_hero_body">Empieza con un presupuesto de %1$d puntos, recluta %2$d piezas, colócalas en tu lado y que comience la partida.</string>
+    <string name="home_section_mode">Elige un modo</string>
+    <string name="home_mode_two_player_title">2 jugadores</string>
+    <string name="home_mode_two_player_subtitle">Por turnos en un mismo dispositivo: compra, colocación y partida.</string>
+    <string name="home_mode_ai_title">Contra la IA</string>
+    <string name="home_mode_ai_subtitle">El rival integrado compra, coloca y juega contra ti.</string>
+    <string name="home_start_button">Comprar y colocar piezas</string>
+
+    <string name="phase_step_setup">Preparación · Comprar y colocar</string>
+    <string name="phase_step_place">Paso 2 · Colocar</string>
+    <string name="badge_vs_ai">Contra la IA</string>
+    <string name="placement_header_build">%1$s forma su ejército</string>
+    <string name="placement_header_place">Le toca colocar a %1$s</string>
+    <string name="placement_zone_hint">Filas permitidas %1$d–%2$d</string>
+    <string name="placement_section_unplaced">Piezas sin colocar</string>
+    <string name="draft_section_drag">Arrastra una pieza a una casilla válida</string>
+    <string name="draft_drop_hint">Cada soltado compra y coloca exactamente una pieza. El contador de la tienda cambia solo tras un soltado válido.</string>
+    <string name="draft_auto_finish">La preparación termina automáticamente tras la última pieza.</string>
+    <string name="draft_metric_budget">Presupuesto</string>
+    <string name="draft_metric_army">Ejército</string>
+    <string name="draft_king_free">Gratis y obligatorio</string>
+    <string name="cd_drag_piece">Arrastra %1$s al tablero</string>
+    <string name="shop_piece_cost">%1$d pts</string>
+
+    <string name="game_turn_title">Juegan las %1$s</string>
+    <string name="game_badge_waiting">Esperando</string>
+    <string name="game_captured_by_white">Capturadas por las blancas</string>
+    <string name="game_captured_by_black">Capturadas por las negras</string>
+    <string name="game_captured_points">%1$d pts</string>
+    <string name="game_no_captures">Aún no hay capturas.</string>
+    <string name="promotion_title">Elige la promoción</string>
+    <string name="promotion_body">Tu peón llegó a la última fila.</string>
+
+    <string name="piece_pawn">Peón</string>
+    <string name="piece_knight">Caballo</string>
+    <string name="piece_bishop">Alfil</string>
+    <string name="piece_rook">Torre</string>
+    <string name="piece_queen">Dama</string>
+    <string name="piece_king">Rey</string>
+    <string name="color_white">Blancas</string>
+    <string name="color_black">Negras</string>
+    <string name="label_you">Tú</string>
+    <string name="label_ai">IA</string>
+    <string name="cd_chess_piece">Pieza de ajedrez: %1$s %2$s</string>
+
+    <string name="helper_waiting_ai_army">Esperando el ejército de la IA.</string>
+    <string name="helper_ai_preparing_army">La IA está preparando su ejército.</string>
+    <string name="helper_build_army">Forma un ejército de %1$d piezas con un rey obligatorio.</string>
+    <string name="helper_waiting_ai_placement">Esperando la colocación de la IA.</string>
+    <string name="helper_ai_choosing_placement">La IA está eligiendo una colocación.</string>
+    <string name="helper_pick_piece">Arrastra una pieza de la tienda a una casilla resaltada.</string>
+    <string name="helper_tap_zone">Suéltala en una casilla dentro de la zona de colocación de %1$s.</string>
+
+    <string name="banner_select_piece_first">Selecciona primero una pieza.</string>
+    <string name="banner_illegal_destination">Ese destino no es legal para la pieza seleccionada.</string>
+    <string name="ai_no_placement">La IA no encontró una colocación legal.</string>
+    <string name="ai_no_move">La IA no encontró una jugada legal.</string>
+
+    <string name="status_to_move">Juegan las %1$s.</string>
+    <string name="status_check">Las %1$s están en jaque.</string>
+    <string name="status_checkmate">Las %1$s dieron jaque mate.</string>
+    <string name="status_king_captured">Las %1$s capturaron al rey.</string>
+    <string name="status_draw">Tablas: %1$s.</string>
+    <string name="outcome_checkmate">Ganan las %1$s por jaque mate.</string>
+    <string name="outcome_king_captured">Ganan las %1$s al capturar al rey.</string>
+    <string name="draw_stalemate">ahogado</string>
+    <string name="draw_insufficient_material">material insuficiente</string>
+
+    <string name="error_negative_piece_count">La cantidad de %1$s no puede ser negativa (%2$d).</string>
+    <string name="error_piece_count_mismatch">Se esperaban exactamente %1$d piezas, pero se recibieron %2$d.</string>
+    <string name="error_king_count_mismatch">Se esperaba exactamente %1$d rey, pero se recibieron %2$d.</string>
+    <string name="error_budget_exceeded">El ejército cuesta %1$d puntos y supera el presupuesto de %2$d puntos.</string>
+    <string name="error_piece_limit_reached">El ejército ya tiene %1$d piezas.</string>
+    <string name="error_king_already_selected">Solo se permite un rey.</string>
+    <string name="error_purchase_over_budget">Esta compra supera el presupuesto en %1$d puntos; %2$d espacios seguirían necesitando al menos %3$d puntos.</string>
+    <string name="error_cannot_complete_army">Esta compra dejaría %1$d espacios con solo %2$d puntos; se necesitan al menos %3$d puntos para completar el ejército.</string>
+    <string name="error_wrong_placement_turn">Le toca colocar a %1$s, no a %2$s.</string>
+    <string name="error_piece_not_available">A %1$s no le quedan %2$s para colocar.</string>
+    <string name="error_square_occupied">La casilla %1$s ya está ocupada.</string>
+    <string name="error_outside_zone">La casilla %1$s está fuera de la zona de colocación de %2$s (filas %3$d–%4$d).</string>
+    <string name="error_duplicate_draft">%1$s ya ha enviado un ejército.</string>
+    <string name="error_wrong_phase">Esa acción no está disponible ahora mismo.</string>
+    <string name="error_no_piece_at_source">No se encontró ninguna pieza en %1$s.</string>
+    <string name="error_wrong_color_turn">Es el turno de %1$s, no de %2$s.</string>
+    <string name="error_illegal_move">La jugada %1$s–%2$s no es legal.</string>
+    <string name="error_unknown">Algo salió mal.</string>
+    <plurals name="draft_points_left">
+        <item quantity="one">Queda %1$d punto</item>
+        <item quantity="many">Quedan %1$d puntos</item>
+        <item quantity="other">Quedan %1$d puntos</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="one">Queda %1$d espacio</item>
+        <item quantity="many">Quedan %1$d espacios</item>
+        <item quantity="other">Quedan %1$d espacios</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">¡Jaque!</string>
+    <string name="game_check_body">%1$s está en jaque: pon el rey a salvo.</string>
+    <string name="game_checkmate_title">¡Jaque mate!</string>
+    <string name="game_checkmate_body">%1$s recibe jaque mate. La partida ha terminado.</string>
+    <string name="game_over_title">Partida terminada</string>
+    <string name="action_new_game">Nueva partida</string>
+    <string name="action_home">Inicio</string>
+    <string name="action_leave">Salir de la partida</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="dialog_leave_title">¿Salir de esta partida?</string>
+    <string name="dialog_leave_body">Se perderán tu formación y tus jugadas actuales.</string>
+    <string name="cd_back">Atrás</string>
+    <string name="cd_app_logo">Logotipo de ChessPoints</string>
+</resources>

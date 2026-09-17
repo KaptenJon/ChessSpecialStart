@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Bir mod seçin</string>
+    <string name="title_build_and_place">Satın al ve yerleştir</string>
+    <string name="title_place_pieces">Taşlarınızı yerleştirin</string>
+    <string name="title_play_match">Maçı oyna</string>
+
+    <string name="home_hero_title">Ordunu satın al.\nTahtayı kur. Sonra oyna.</string>
+    <string name="home_hero_body">%1$d puanlık bütçeyle başla, %2$d taş seç, kendi tarafına yerleştir ve oyun başlasın.</string>
+    <string name="home_section_mode">Bir mod seçin</string>
+    <string name="home_mode_two_player_title">2 oyuncu</string>
+    <string name="home_mode_two_player_subtitle">Tek cihazda sırayla: satın alma, yerleştirme ve maç.</string>
+    <string name="home_mode_ai_title">YZ\'ye karşı</string>
+    <string name="home_mode_ai_subtitle">Yerleşik rakip taş satın alır, yerleştirir ve sana karşı oynar.</string>
+    <string name="home_start_button">Taşları satın al ve yerleştir</string>
+
+    <string name="phase_step_setup">Kurulum · Satın al ve yerleştir</string>
+    <string name="phase_step_place">2. adım · Yerleştir</string>
+    <string name="badge_vs_ai">YZ\'ye karşı</string>
+    <string name="placement_header_build">%1$s ordusunu kuruyor</string>
+    <string name="placement_header_place">Sıra %1$s tarafında</string>
+    <string name="placement_zone_hint">İzin verilen yatay sıralar %1$d–%2$d</string>
+    <string name="placement_section_unplaced">Yerleştirilmemiş taşlar</string>
+    <string name="draft_section_drag">Bir taşı geçerli bir kareye sürükle</string>
+    <string name="draft_drop_hint">Her bırakma tam olarak bir taş satın alıp yerleştirir. Mağaza sayacı yalnızca geçerli bırakmadan sonra değişir.</string>
+    <string name="draft_auto_finish">Kurulum, son taştan sonra otomatik olarak tamamlanır.</string>
+    <string name="draft_metric_budget">Bütçe</string>
+    <string name="draft_metric_army">Ordu</string>
+    <string name="draft_king_free">Ücretsiz ve zorunlu</string>
+    <string name="cd_drag_piece">%1$s taşını tahtaya sürükleyin</string>
+    <string name="shop_piece_cost">%1$d puan</string>
+
+    <string name="game_turn_title">Sıra %1$s tarafında</string>
+    <string name="game_badge_waiting">Bekliyor</string>
+    <string name="game_captured_by_white">Beyazın aldığı taşlar</string>
+    <string name="game_captured_by_black">Siyahın aldığı taşlar</string>
+    <string name="game_captured_points">%1$d puan</string>
+    <string name="game_no_captures">Henüz alınan taş yok.</string>
+    <string name="promotion_title">Terfi seçin</string>
+    <string name="promotion_body">Piyonunuz son sıraya ulaştı.</string>
+
+    <string name="piece_pawn">Piyon</string>
+    <string name="piece_knight">At</string>
+    <string name="piece_bishop">Fil</string>
+    <string name="piece_rook">Kale</string>
+    <string name="piece_queen">Vezir</string>
+    <string name="piece_king">Şah</string>
+    <string name="color_white">Beyaz</string>
+    <string name="color_black">Siyah</string>
+    <string name="label_you">Sen</string>
+    <string name="label_ai">YZ</string>
+    <string name="cd_chess_piece">Satranç taşı: %1$s %2$s</string>
+
+    <string name="helper_waiting_ai_army">YZ ordusu bekleniyor.</string>
+    <string name="helper_ai_preparing_army">YZ ordusunu hazırlıyor.</string>
+    <string name="helper_build_army">Biri zorunlu şah olmak üzere %1$d taşlık bir ordu kur.</string>
+    <string name="helper_waiting_ai_placement">YZ yerleştirmesi bekleniyor.</string>
+    <string name="helper_ai_choosing_placement">YZ bir yerleştirme seçiyor.</string>
+    <string name="helper_pick_piece">Mağazadan bir taşı vurgulanan bir kareye sürükle.</string>
+    <string name="helper_tap_zone">%1$s için yerleştirme bölgesindeki bir kareye bırak.</string>
+
+    <string name="banner_select_piece_first">Önce bir taş seçin.</string>
+    <string name="banner_illegal_destination">Bu hedef, seçili taş için geçerli değil.</string>
+    <string name="ai_no_placement">YZ geçerli bir yerleştirme bulamadı.</string>
+    <string name="ai_no_move">YZ geçerli bir hamle bulamadı.</string>
+
+    <string name="status_to_move">Sıra %1$s tarafında.</string>
+    <string name="status_check">%1$s şah çekildi.</string>
+    <string name="status_checkmate">%1$s şah mat yaptı.</string>
+    <string name="status_king_captured">%1$s şahı aldı.</string>
+    <string name="status_draw">Beraberlik: %1$s.</string>
+    <string name="outcome_checkmate">%1$s şah matla kazandı.</string>
+    <string name="outcome_king_captured">%1$s şahı alarak kazandı.</string>
+    <string name="draw_stalemate">pat</string>
+    <string name="draw_insufficient_material">yetersiz materyal</string>
+
+    <string name="error_negative_piece_count">%1$s sayısı negatif olamaz (%2$d).</string>
+    <string name="error_piece_count_mismatch">Tam olarak %1$d taş beklenirken %2$d alındı.</string>
+    <string name="error_king_count_mismatch">Tam olarak %1$d şah beklenirken %2$d alındı.</string>
+    <string name="error_budget_exceeded">Ordu %1$d puan tutuyor ve %2$d puanlık bütçeyi aşıyor.</string>
+    <string name="error_piece_limit_reached">Orduda zaten %1$d taş var.</string>
+    <string name="error_king_already_selected">Yalnızca bir şaha izin verilir.</string>
+    <string name="error_purchase_over_budget">Bu alım bütçeyi %1$d puan aşıyor; %2$d yer için hâlâ en az %3$d puan gerekir.</string>
+    <string name="error_cannot_complete_army">Bu alım %1$d yer bırakırken yalnızca %2$d puan kalır; orduyu tamamlamak için en az %3$d puan gerekir.</string>
+    <string name="error_wrong_placement_turn">Sıra %1$s tarafında, %2$s değil.</string>
+    <string name="error_piece_not_available">%1$s tarafında yerleştirilecek %2$s kalmadı.</string>
+    <string name="error_square_occupied">%1$s karesi zaten dolu.</string>
+    <string name="error_outside_zone">%1$s karesi, %2$s için yerleştirme bölgesinin dışında (sıra %3$d–%4$d).</string>
+    <string name="error_duplicate_draft">%1$s zaten bir ordu gönderdi.</string>
+    <string name="error_wrong_phase">Bu işlem şu anda kullanılamıyor.</string>
+    <string name="error_no_piece_at_source">%1$s karesinde taş bulunamadı.</string>
+    <string name="error_wrong_color_turn">Hamle sırası %1$s tarafında, %2$s değil.</string>
+    <string name="error_illegal_move">%1$s–%2$s hamlesi geçerli değil.</string>
+    <string name="error_unknown">Bir şeyler ters gitti.</string>
+    <plurals name="draft_points_left">
+        <item quantity="one">%1$d puan kaldı</item>
+        <item quantity="other">%1$d puan kaldı</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="one">%1$d yer kaldı</item>
+        <item quantity="other">%1$d yer kaldı</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">Şah!</string>
+    <string name="game_check_body">%1$s şah çekildi - şahı güvenli bir kareye taşıyın.</string>
+    <string name="game_checkmate_title">Şah mat!</string>
+    <string name="game_checkmate_body">%1$s mat oldu. Maç bitti.</string>
+    <string name="game_over_title">Oyun bitti</string>
+    <string name="action_new_game">Yeni oyun</string>
+    <string name="action_home">Ana ekran</string>
+    <string name="action_leave">Maçtan çık</string>
+    <string name="action_cancel">İptal</string>
+    <string name="dialog_leave_title">Bu maçtan çıkılsın mı?</string>
+    <string name="dialog_leave_body">Mevcut dizilişiniz ve hamleleriniz kaybolacak.</string>
+    <string name="cd_back">Geri</string>
+    <string name="cd_app_logo">ChessPoints logosu</string>
+</resources>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">选择模式</string>
+    <string name="title_build_and_place">购买并布置</string>
+    <string name="title_place_pieces">布置你的棋子</string>
+    <string name="title_play_match">开始对局</string>
+
+    <string name="home_hero_title">购买你的棋子。\n布置棋盘。然后开战。</string>
+    <string name="home_hero_body">以 %1$d 点预算开局，选购 %2$d 枚棋子，布置在己方阵地，然后开始对局。</string>
+    <string name="home_section_mode">选择模式</string>
+    <string name="home_mode_two_player_title">双人对战</string>
+    <string name="home_mode_two_player_subtitle">在同一台设备上轮流购买、布置并对局。</string>
+    <string name="home_mode_ai_title">人机对战</string>
+    <string name="home_mode_ai_subtitle">内置对手会自行购买、布置并与你对局。</string>
+    <string name="home_start_button">购买并布置棋子</string>
+
+    <string name="phase_step_setup">准备 · 购买并布置</string>
+    <string name="phase_step_place">第 2 步 · 布置</string>
+    <string name="badge_vs_ai">人机对战</string>
+    <string name="placement_header_build">%1$s正在组建阵容</string>
+    <string name="placement_header_place">轮到%1$s布置</string>
+    <string name="placement_zone_hint">可用横行 %1$d–%2$d</string>
+    <string name="placement_section_unplaced">未布置的棋子</string>
+    <string name="draft_section_drag">将棋子拖到合法格子</string>
+    <string name="draft_drop_hint">每次放下会购买并布置恰好一枚棋子。商店数量仅在合法放置后更新。</string>
+    <string name="draft_auto_finish">放下最后一枚棋子后，准备阶段将自动结束。</string>
+    <string name="draft_metric_budget">预算</string>
+    <string name="draft_metric_army">阵容</string>
+    <string name="draft_king_free">免费且必选</string>
+    <string name="cd_drag_piece">将%1$s拖到棋盘上</string>
+    <string name="shop_piece_cost">%1$d 点</string>
+
+    <string name="game_turn_title">轮到%1$s走棋</string>
+    <string name="game_badge_waiting">等待中</string>
+    <string name="game_captured_by_white">白方吃掉的棋子</string>
+    <string name="game_captured_by_black">黑方吃掉的棋子</string>
+    <string name="game_captured_points">%1$d 点</string>
+    <string name="game_no_captures">尚未吃子。</string>
+    <string name="promotion_title">选择升变</string>
+    <string name="promotion_body">你的兵已到达底线。</string>
+
+    <string name="piece_pawn">兵</string>
+    <string name="piece_knight">马</string>
+    <string name="piece_bishop">象</string>
+    <string name="piece_rook">车</string>
+    <string name="piece_queen">后</string>
+    <string name="piece_king">王</string>
+    <string name="color_white">白方</string>
+    <string name="color_black">黑方</string>
+    <string name="label_you">你</string>
+    <string name="label_ai">AI</string>
+    <string name="cd_chess_piece">国际象棋棋子：%1$s%2$s</string>
+
+    <string name="helper_waiting_ai_army">正在等待 AI 的阵容。</string>
+    <string name="helper_ai_preparing_army">AI 正在准备阵容。</string>
+    <string name="helper_build_army">组建一支包含一枚必选王的 %1$d 枚棋子阵容。</string>
+    <string name="helper_waiting_ai_placement">正在等待 AI 布置。</string>
+    <string name="helper_ai_choosing_placement">AI 正在选择布置位置。</string>
+    <string name="helper_pick_piece">将棋子从商店拖到高亮的格子上。</string>
+    <string name="helper_tap_zone">请在%1$s的布置区域内的格子上松开。</string>
+
+    <string name="banner_select_piece_first">请先选择一枚棋子。</string>
+    <string name="banner_illegal_destination">所选棋子无法走到该目标格。</string>
+    <string name="ai_no_placement">AI 未能找到合法的布置位置。</string>
+    <string name="ai_no_move">AI 未能找到合法着法。</string>
+
+    <string name="status_to_move">轮到%1$s走棋。</string>
+    <string name="status_check">%1$s被将军。</string>
+    <string name="status_checkmate">%1$s将杀。</string>
+    <string name="status_king_captured">%1$s吃掉了王。</string>
+    <string name="status_draw">和棋：%1$s。</string>
+    <string name="outcome_checkmate">%1$s以将杀获胜。</string>
+    <string name="outcome_king_captured">%1$s吃王获胜。</string>
+    <string name="draw_stalemate">逼和</string>
+    <string name="draw_insufficient_material">子力不足</string>
+
+    <string name="error_negative_piece_count">%1$s的数量不能为负（%2$d）。</string>
+    <string name="error_piece_count_mismatch">应为 %1$d 枚棋子，实际为 %2$d 枚。</string>
+    <string name="error_king_count_mismatch">应为 %1$d 枚王，实际为 %2$d 枚。</string>
+    <string name="error_budget_exceeded">该阵容需 %1$d 点，超过了 %2$d 点的预算。</string>
+    <string name="error_piece_limit_reached">阵容已有 %1$d 枚棋子。</string>
+    <string name="error_king_already_selected">只允许一枚王。</string>
+    <string name="error_purchase_over_budget">此次购买超出预算 %1$d 点；剩余 %2$d 个名额仍至少需要 %3$d 点。</string>
+    <string name="error_cannot_complete_army">此次购买后将剩余 %1$d 个名额但只有 %2$d 点；凑齐阵容至少需要 %3$d 点。</string>
+    <string name="error_wrong_placement_turn">轮到%1$s布置，而非%2$s。</string>
+    <string name="error_piece_not_available">%1$s没有可布置的%2$s了。</string>
+    <string name="error_square_occupied">格子 %1$s 已被占用。</string>
+    <string name="error_outside_zone">格子 %1$s 位于%2$s的布置区域之外（横行 %3$d–%4$d）。</string>
+    <string name="error_duplicate_draft">%1$s已经提交过阵容。</string>
+    <string name="error_wrong_phase">当前无法执行该操作。</string>
+    <string name="error_no_piece_at_source">在 %1$s 上未找到棋子。</string>
+    <string name="error_wrong_color_turn">现在轮到%1$s走棋，而非%2$s。</string>
+    <string name="error_illegal_move">着法 %1$s–%2$s 不合法。</string>
+    <string name="error_unknown">出了点问题。</string>
+    <plurals name="draft_points_left">
+        <item quantity="other">剩余 %1$d 点</item>
+    </plurals>
+    <plurals name="draft_slots_left">
+        <item quantity="other">剩余 %1$d 个名额</item>
+    </plurals>
+
+    <!-- Check, game over and navigation -->
+    <string name="game_check_title">将军！</string>
+    <string name="game_check_body">%1$s被将军了，请把国王移到安全位置。</string>
+    <string name="game_checkmate_title">将死！</string>
+    <string name="game_checkmate_body">%1$s被将死，本局结束。</string>
+    <string name="game_over_title">对局结束</string>
+    <string name="action_new_game">新对局</string>
+    <string name="action_home">主页</string>
+    <string name="action_leave">退出对局</string>
+    <string name="action_cancel">取消</string>
+    <string name="dialog_leave_title">要退出本局吗？</string>
+    <string name="dialog_leave_body">当前的布阵和走法将会丢失。</string>
+    <string name="cd_back">返回</string>
+    <string name="cd_app_logo">ChessPoints 标志</string>
+</resources>

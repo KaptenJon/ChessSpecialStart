@@ -66,7 +66,103 @@ sealed interface DraftValidationResult {
     data class Invalid(val errors: List<DraftValidationError>) : DraftValidationResult
 }
 
+sealed interface DraftPurchaseValidation {
+    data object Allowed : DraftPurchaseValidation
+
+    sealed interface Rejected : DraftPurchaseValidation {
+        val message: String
+    }
+
+    data class PieceLimitReached(
+        val requiredPieceCount: Int,
+    ) : Rejected {
+        override val message: String = "The army already has $requiredPieceCount pieces."
+    }
+
+    data object KingAlreadySelected : Rejected {
+        override val message: String = "Only one king is allowed."
+    }
+
+    data class CannotCompleteArmy(
+        val remainingSlots: Int,
+        val remainingBudget: Int,
+        val minimumRequiredBudget: Int,
+    ) : Rejected {
+        override val message: String =
+            if (remainingBudget < 0) {
+                "This purchase exceeds the budget by ${-remainingBudget} points; " +
+                    "$remainingSlots slots would still need at least $minimumRequiredBudget points."
+            } else {
+                "This purchase would leave $remainingSlots slots but only $remainingBudget points; " +
+                    "at least $minimumRequiredBudget points are needed to complete the army."
+            }
+    }
+}
+
 object DraftValidator {
+    fun validateAddition(
+        pieceCounts: Map<PieceType, Int>,
+        pieceType: PieceType,
+        rules: DraftRules = DraftRules(),
+    ): DraftPurchaseValidation {
+        val normalizedCounts = PieceType.entries.associateWith { pieceCounts[it] ?: 0 }
+        val currentTotal = normalizedCounts.values.sum()
+        if (currentTotal >= rules.requiredPieceCount) {
+            return DraftPurchaseValidation.PieceLimitReached(rules.requiredPieceCount)
+        }
+        if (pieceType == PieceType.KING && normalizedCounts.getValue(PieceType.KING) >= 1) {
+            return DraftPurchaseValidation.KingAlreadySelected
+        }
+
+        val proposedCounts = normalizedCounts.toMutableMap().apply {
+            this[pieceType] = getValue(pieceType) + 1
+        }
+        val remainingSlots = rules.requiredPieceCount - currentTotal - 1
+        val proposedCost = proposedCounts.entries.sumOf { (type, count) -> type.pointValue * count }
+        val kingStillNeeded = proposedCounts.getValue(PieceType.KING) == 0
+        if (kingStillNeeded && remainingSlots == 0) {
+            return DraftPurchaseValidation.CannotCompleteArmy(
+                remainingSlots = remainingSlots,
+                remainingBudget = rules.budget - proposedCost,
+                minimumRequiredBudget = 0,
+            )
+        }
+
+        val cheapestNonKingCost = PieceType.entries
+            .filter { it != PieceType.KING }
+            .minOf { it.pointValue }
+        val minimumCompletionCost =
+            if (kingStillNeeded) {
+                (remainingSlots - 1).coerceAtLeast(0) * cheapestNonKingCost
+            } else {
+                remainingSlots * cheapestNonKingCost
+            }
+        val remainingBudget = rules.budget - proposedCost
+        if (remainingBudget < minimumCompletionCost) {
+            return DraftPurchaseValidation.CannotCompleteArmy(
+                remainingSlots = remainingSlots,
+                remainingBudget = remainingBudget,
+                minimumRequiredBudget = minimumCompletionCost,
+            )
+        }
+        return DraftPurchaseValidation.Allowed
+    }
+
+    /**
+     * Returns whether adding one piece still leaves a path to a valid roster.
+     *
+     * The remaining slots are conservatively priced at the cheapest legal
+     * pieces, while reserving the mandatory king slot when it has not yet
+     * been bought.
+     */
+    fun canAddPiece(
+        pieceCounts: Map<PieceType, Int>,
+        pieceType: PieceType,
+        rules: DraftRules = DraftRules(),
+    ): Boolean {
+        return validateAddition(pieceCounts, pieceType, rules) is DraftPurchaseValidation.Allowed
+    }
+
     fun validate(
         color: Color,
         pieceCounts: Map<PieceType, Int>,

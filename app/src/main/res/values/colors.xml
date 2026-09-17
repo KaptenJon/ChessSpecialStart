@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand colours shared by the launcher icon, the splash screen and the Compose theme. -->
+    <color name="brand_green_deep">#FF0D2E20</color>
+    <color name="brand_green">#FF1F6048</color>
+    <color name="brand_gold">#FFE2A93B</color>
+    <color name="brand_gold_light">#FFFFE8B5</color>
+    <color name="ic_launcher_background">#FF0D2E20</color>
+</resources>

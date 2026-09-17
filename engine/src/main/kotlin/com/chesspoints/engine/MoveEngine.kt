@@ -88,6 +88,7 @@ sealed interface PositionStatus {
     data object Active : PositionStatus
     data class Check(val checkedColor: Color) : PositionStatus
     data class Checkmate(val winner: Color) : PositionStatus
+    data class KingCaptured(val winner: Color) : PositionStatus
     data class Draw(val reason: DrawReason) : PositionStatus
 }
 
@@ -171,7 +172,8 @@ object MoveEngine {
         }
 
         return pseudoMoves.filter { move ->
-            !isInCheck(applyUnchecked(position, move), move.piece.color)
+            move.capturedPiece?.type != PieceType.KING &&
+                !isInCheck(applyUnchecked(position, move), move.piece.color)
         }
     }
 
@@ -193,6 +195,13 @@ object MoveEngine {
     }
 
     fun evaluate(position: GamePosition): PositionStatus {
+        val whiteKingPresent = position.board.kingSquare(Color.WHITE) != null
+        val blackKingPresent = position.board.kingSquare(Color.BLACK) != null
+        if (!whiteKingPresent || !blackKingPresent) {
+            return PositionStatus.KingCaptured(
+                winner = if (whiteKingPresent) Color.WHITE else Color.BLACK,
+            )
+        }
         if (insufficientMaterial(position.board)) {
             return PositionStatus.Draw(DrawReason.INSUFFICIENT_MATERIAL)
         }

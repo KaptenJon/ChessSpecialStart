@@ -5,6 +5,11 @@ import com.chesspoints.engine.PieceType
 import com.chesspoints.engine.PlacementResult
 import com.chesspoints.engine.PlacementState
 import com.chesspoints.engine.PlacementValidator
+import com.chesspoints.engine.PlacementRules
+import com.chesspoints.engine.Board
+import com.chesspoints.engine.DraftPurchaseValidation
+import com.chesspoints.engine.DraftRules
+import com.chesspoints.engine.DraftValidator
 import com.chesspoints.engine.Square
 import kotlin.math.abs
 
@@ -14,6 +19,49 @@ data class AiPlacementChoice(
 )
 
 class AiPlacer {
+    /**
+     * Chooses one buy-and-place action for the atomic setup phase.
+     *
+     * [remainingPieces] is what is still missing from the AI's target army,
+     * [purchasedCounts] is what it already owns. The purchase is verified against
+     * [draftRules] so the AI can never pick a piece the engine would reject.
+     */
+    fun nextSetupPlacement(
+        color: Color,
+        remainingPieces: Map<PieceType, Int>,
+        board: Board,
+        rules: PlacementRules,
+        purchasedCounts: Map<PieceType, Int> = emptyMap(),
+        draftRules: DraftRules = DraftRules(),
+    ): AiPlacementChoice? {
+        val zoneRanks = rules.zoneFor(color).ranks
+        val freeSquares = placementSquaresFor(color, zoneRanks).filter { board[it] == null }
+        if (freeSquares.isEmpty()) return null
+
+        val pieceOrder = listOf(
+            PieceType.KING,
+            PieceType.QUEEN,
+            PieceType.ROOK,
+            PieceType.KNIGHT,
+            PieceType.BISHOP,
+            PieceType.PAWN,
+        )
+
+        for (pieceType in pieceOrder) {
+            if (remainingPieces.getOrDefault(pieceType, 0) <= 0) continue
+            if (DraftValidator.validateAddition(purchasedCounts, pieceType, draftRules)
+                !is DraftPurchaseValidation.Allowed
+            ) {
+                continue
+            }
+            val square = freeSquares.maxByOrNull { candidate ->
+                scoreSquare(board, color, zoneRanks, pieceType, candidate)
+            } ?: continue
+            return AiPlacementChoice(pieceType, square)
+        }
+        return null
+    }
+
     fun nextPlacement(
         state: PlacementState,
         color: Color = state.sideToPlace,
@@ -60,17 +108,24 @@ class AiPlacer {
         color: Color,
         pieceType: PieceType,
         square: Square,
+    ): Double = scoreSquare(state.board, color, state.rules.zoneFor(color).ranks, pieceType, square)
+
+    private fun scoreSquare(
+        board: Board,
+        color: Color,
+        zoneRanks: IntRange,
+        pieceType: PieceType,
+        square: Square,
     ): Double {
-        val zone = state.rules.zoneFor(color).ranks
-        val backRank = if (color == Color.WHITE) zone.first else zone.last
-        val frontRank = if (color == Color.WHITE) zone.last else zone.first
+        val backRank = if (color == Color.WHITE) zoneRanks.first else zoneRanks.last
+        val frontRank = if (color == Color.WHITE) zoneRanks.last else zoneRanks.first
         val centerDistance = kotlin.math.abs(square.file - 3.5)
         val edgeDistance = minOf(square.file, 7 - square.file).toDouble()
         val cornerishDistance = minOf(abs(square.file - 1), abs(square.file - 6)).toDouble()
         val friendlyNeighbors = adjacentSquares(square).count { neighbor ->
-            state.board[neighbor]?.color == color
+            board[neighbor]?.color == color
         }.toDouble()
-        val nearestEnemyDistance = state.board.pieces(color.opposite())
+        val nearestEnemyDistance = board.pieces(color.opposite())
             .minOfOrNull { (enemySquare, _) -> manhattan(square, enemySquare).toDouble() }
             ?: 6.0
 

@@ -14,7 +14,16 @@ function Fail([string]$Message) {
 }
 
 function Get-JavaMajorVersion([string]$JavaExecutable) {
-    $versionOutput = & $JavaExecutable -version 2>&1
+    # java -version writes its banner to stderr; capture it without treating it as a script error.
+    $savedErrorActionPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = "Continue"
+        $versionOutput = & $JavaExecutable -version 2>&1
+    }
+    finally {
+        $ErrorActionPreference = $savedErrorActionPreference
+    }
+
     if ($LASTEXITCODE -ne 0) {
         return $null
     }
