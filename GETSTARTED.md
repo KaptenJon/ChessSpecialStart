@@ -199,6 +199,11 @@ gh secret set RELEASE_KEY_ALIAS --repo $repo --body "chesspoints"
 gh secret set RELEASE_KEY_PASSWORD --repo $repo --body "<key-password>"
 ```
 
+Use the PowerShell expression above (or the setup script) for
+`RELEASE_KEYSTORE_BASE64`. The workflow accepts wrapped Windows Base64 by
+removing whitespace before decoding, but the secret must contain raw standard
+Base64; do not upload `certutil -encode` output with its header/footer lines.
+
 Those secret names must match exactly, because `release.yml` reads them directly.
 
 ## 9. Cut a release

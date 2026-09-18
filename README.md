@@ -70,6 +70,10 @@ Base64-encode the keystore before uploading it as `RELEASE_KEYSTORE_BASE64`:
 - Windows PowerShell: `[Convert]::ToBase64String([IO.File]::ReadAllBytes("release.keystore"))`
 - Linux: `base64 -w0 release.keystore`
 
+The release workflow removes whitespace before decoding, so wrapped Base64 copied
+from Windows is accepted. Use a raw Base64 value only; do not use
+`certutil -encode`, which adds PEM-style header/footer lines.
+
 Then set the secrets manually if needed:
 
 ```powershell
