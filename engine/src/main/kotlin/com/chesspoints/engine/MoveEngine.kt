@@ -527,7 +527,10 @@ object MoveEngine {
             while (current != null) {
                 val piece = board[current]
                 if (piece != null) {
-                    return piece.color == byColor && piece.type in validAttackers
+                    if (piece.color == byColor && piece.type in validAttackers) {
+                        return true
+                    }
+                    break
                 }
                 current = current.offset(fileDirection, rankDirection)
             }

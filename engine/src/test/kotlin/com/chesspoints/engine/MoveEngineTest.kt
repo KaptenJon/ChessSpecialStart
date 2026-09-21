@@ -157,6 +157,42 @@ class MoveEngineTest {
     }
 
     @Test
+    fun detectsBishopCheckThroughEmptySquaresEvenWhenAnotherDiagonalIsBlocked() {
+        val position = positionWith(
+            sideToMove = Color.BLACK,
+            "a1" to Piece(PieceType.KING, Color.WHITE),
+            "e8" to Piece(PieceType.KING, Color.BLACK),
+            "h5" to Piece(PieceType.BISHOP, Color.WHITE),
+            "e4" to Piece(PieceType.PAWN, Color.BLACK),
+        )
+
+        val status = MoveEngine.evaluate(position)
+
+        val check = assertIs<PositionStatus.Check>(status)
+        assertEquals(Color.BLACK, check.checkedColor)
+        assertTrue(MoveEngine.isInCheck(position, Color.BLACK))
+    }
+
+    @Test
+    fun detectsBishopCheckmateThroughEmptySquaresEvenWhenAnotherDiagonalIsBlocked() {
+        val position = positionWith(
+            sideToMove = Color.BLACK,
+            "a1" to Piece(PieceType.KING, Color.WHITE),
+            "h8" to Piece(PieceType.KING, Color.BLACK),
+            "a8" to Piece(PieceType.ROOK, Color.WHITE),
+            "f6" to Piece(PieceType.KING, Color.WHITE),
+            "g6" to Piece(PieceType.BISHOP, Color.WHITE),
+            "g7" to Piece(PieceType.PAWN, Color.BLACK),
+        )
+
+        val status = MoveEngine.evaluate(position)
+
+        val checkmate = assertIs<PositionStatus.Checkmate>(status)
+        assertEquals(Color.WHITE, checkmate.winner)
+        assertTrue(MoveEngine.legalMoves(position).isEmpty())
+    }
+
+    @Test
     fun whileInCheckOnlyMovesThatResolveCheckAreLegal() {
         val position = positionWith(
             sideToMove = Color.BLACK,
