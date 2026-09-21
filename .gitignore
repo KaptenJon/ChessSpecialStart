@@ -22,6 +22,11 @@ local.properties
 !gradlew.bat
 !gradle/wrapper/gradle-wrapper.jar
 
+# Local/generated tooling state
+.github/agents/squad.agent.md.local-backup
+.kotlin/
+gradle/gradle-daemon-jvm.properties
+
 # Android artifacts
 captures/
 *.apk
